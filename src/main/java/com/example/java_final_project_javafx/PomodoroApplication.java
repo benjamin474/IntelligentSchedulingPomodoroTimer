@@ -17,6 +17,12 @@ public class PomodoroApplication extends Application {
         stage.setTitle("Pomodoro Timer");
         stage.setScene(scene);
         stage.show();
+
+        // 儲存目前計畫表
+        stage.setOnCloseRequest(event -> {
+            MainController controller = fxmlLoader.getController();
+            controller.saveTasksToFile();
+        });
     }
 
     public static void main(String[] args) {

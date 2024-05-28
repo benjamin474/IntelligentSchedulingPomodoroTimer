@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.java_final_project_javafx.MainController">
     <left>
@@ -33,7 +34,12 @@
             </padding>
             <Label text="Tasks"/>
             <ListView fx:id="taskListView"/>
-            <Button text="Add Task" onAction="#showAddTaskDialog"/>
+            <HBox spacing="10.0">
+                <Button text="Add Task" onAction="#showAddTaskDialog"/>
+                <Button text="Edit Task" onAction="#showEditTaskDialog"/>
+                <Button text="Delete Task" onAction="#deleteTask"/>
+                <Button text="View Task" onAction="#viewTaskDetails"/>
+            </HBox>
         </VBox>
     </center>
     <right>
