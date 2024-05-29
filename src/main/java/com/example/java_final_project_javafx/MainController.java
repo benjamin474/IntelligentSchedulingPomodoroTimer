@@ -37,7 +37,7 @@ public class MainController {
     private TaskStorage taskStorage = new TaskStorage();
 
     @FXML
-    public void initialize0() {
+    public void initialize() {
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
         taskStorage.loadTasksFromFile(taskListView.getItems());
