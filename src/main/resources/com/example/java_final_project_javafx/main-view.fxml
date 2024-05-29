@@ -35,10 +35,10 @@
             <Label text="Tasks"/>
             <ListView fx:id="taskListView"/>
             <HBox spacing="10.0">
-                <Button text="Add Task" onAction="#showAddTaskDialog"/>
-                <Button text="Edit Task" onAction="#showEditTaskDialog"/>
-                <Button text="Delete Task" onAction="#deleteTask"/>
-                <Button text="View Task" onAction="#viewTaskDetails"/>
+                <Button text="Add" onAction="#showAddTaskDialog"/>
+                <Button text="Edit" onAction="#showEditTaskDialog"/>
+                <Button text="Delete" onAction="#deleteTask"/>
+                <Button text="View" onAction="#viewTaskDetails"/>
             </HBox>
         </VBox>
     </center>

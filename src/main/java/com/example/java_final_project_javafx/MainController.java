@@ -45,6 +45,7 @@ public class MainController {
 
     @FXML
     protected void startTimer() {
+        // Timer 目前異常
         String durationText = durationField.getText();
         try {
             int duration = Integer.parseInt(durationText) * 60;
@@ -72,18 +73,27 @@ public class MainController {
 
     @FXML
     protected void showAddTaskDialog() {
+
+        // 新增頁面初始化
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         VBox dialogVbox = new VBox(20);
         TextField newTaskField = new TextField();
         newTaskField.setPromptText("Enter new task");
 
+        // 開始日期
         DatePicker startDatePicker = new DatePicker();
         startDatePicker.setPromptText("Start date");
 
+        // 結束日期
         DatePicker endDatePicker = new DatePicker();
         endDatePicker.setPromptText("End date");
 
+        // 結束日期早於開始日期會反紅
+        Label errorLabel = new Label();
+        errorLabel.setStyle("-fx-text-fill: red;");
+
+        // 輸入完成度
         TextField progressField = new TextField();
         progressField.setPromptText("Completion (0-100%)");
 
@@ -100,6 +110,7 @@ public class MainController {
 
     private void handleAddTask(TextField newTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog) {
         try {
+
             String newTaskName = newTaskField.getText();
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
@@ -135,18 +146,22 @@ public class MainController {
             return;
         }
 
+//        新增頁面初始化
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         VBox dialogVbox = new VBox(20);
         TextField editTaskField = new TextField(selectedTask.getName());
         editTaskField.setPromptText("Edit task");
 
+//         起訖時間
         DatePicker startDatePicker = new DatePicker(selectedTask.getStartDate());
         DatePicker endDatePicker = new DatePicker(selectedTask.getEndDate());
 
+//         判斷完成度
         TextField progressField = new TextField(selectedTask.getCompleted() != null ? String.valueOf(selectedTask.getCompleted()) : "");
         progressField.setPromptText("Completion (0-100%)");
 
+//        儲存修改
         Button saveButton = new Button("Save");
         saveButton.setOnAction(event -> handleEditTask(editTaskField, startDatePicker, endDatePicker, progressField, dialog, selectedTask));
 
@@ -160,6 +175,8 @@ public class MainController {
 
     private void handleEditTask(TextField editTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog, Task selectedTask) {
         try {
+
+
             String editedTaskName = editTaskField.getText();
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
