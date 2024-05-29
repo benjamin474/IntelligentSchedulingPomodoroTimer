@@ -12,6 +12,7 @@ public class Task implements Serializable {
     private Integer completed; // Allow null to indicate not manually set
     private List<SubTask> subTasks;
 
+
     public Task(String name, LocalDate startDate, LocalDate endDate, Integer completed) {
         this.name = name;
         this.startDate = startDate;

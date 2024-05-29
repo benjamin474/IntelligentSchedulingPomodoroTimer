@@ -7,9 +7,10 @@ import java.util.List;
 
 public class TaskStorage {
 
-    private static final String TASKS_FILE = "tasks.txt";
+    private static final String TASKS_FILE = "Tasks.txt";
 
     public void saveTasksToFile(List<Task> tasks) {
+//       儲存任務資料
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(TASKS_FILE))) {
             out.writeObject(tasks);
             System.out.println("Saving tasks to file: " + new File(TASKS_FILE).getAbsolutePath());
@@ -22,7 +23,12 @@ public class TaskStorage {
     public void loadTasksFromFile(ObservableList<Task> tasks) {
         File file = new File(TASKS_FILE);
         System.out.println("Loading tasks from file: " + file.getAbsolutePath());
+
         if (file.exists()) {
+            if(file.length() == 0) {
+                System.out.println("The File is empty");
+                return;
+            }
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
                 List<Task> loadedTasks = (List<Task>) in.readObject();
                 tasks.addAll(loadedTasks);

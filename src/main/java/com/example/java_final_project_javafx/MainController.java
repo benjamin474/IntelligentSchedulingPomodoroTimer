@@ -37,7 +37,7 @@ public class MainController {
     private TaskStorage taskStorage = new TaskStorage();
 
     @FXML
-    public void initialize() {
+    public void initialize0() {
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
         taskStorage.loadTasksFromFile(taskListView.getItems());
@@ -146,7 +146,6 @@ public class MainController {
             return;
         }
 
-//        新增頁面初始化
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         VBox dialogVbox = new VBox(20);
