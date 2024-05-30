@@ -3,6 +3,7 @@ package com.example.java_final_project_javafx;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.util.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
@@ -12,6 +13,7 @@ import javafx.beans.binding.Bindings;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -115,24 +117,13 @@ public class MainController {
         progressField.setText("0");
         progressField.setPromptText("Completion (0 - 100%)");
 
-        Slider slider = new Slider();
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setValue(0);
-        slider.setBlockIncrement(1);
-
-        NumberFormat format = NumberFormat.getIntegerInstance();
-
-        // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
-        progressField.textProperty().bind(Bindings.createStringBinding(() ->
-                format.format(slider.getValue()), slider.valueProperty()));
 
         Button addButton = new Button("Add");
         addButton.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
 
         newTaskField.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
 
-        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton);
+        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, addButton);
         Scene dialogScene = new Scene(dialogVbox, 300, 300);
         dialog.setScene(dialogScene);
         dialog.show();
@@ -161,15 +152,6 @@ public class MainController {
         }
     }
 
-    private void storeToListView(Task newTask) {
-        if (newTask.getCompleted() < 100) {
-            taskListView.getItems().add(newTask);
-        } else {
-            System.out.println("Task already completed");
-            finishedListView.getItems().add(newTask);
-        }
-
-    }
 
     @FXML
     protected void showEditTaskDialog() {
@@ -192,6 +174,28 @@ public class MainController {
 //         判斷完成度
         TextField progressField = new TextField(selectedTask.getCompleted() != null ? String.valueOf(selectedTask.getCompleted()) : "");
         progressField.setPromptText("Completion (0-100%)");
+        Slider slider = new Slider();
+        slider.setMin(0);
+        slider.setMax(100);
+        slider.setValue(0);
+        slider.setBlockIncrement(1);
+
+        NumberFormat format = NumberFormat.getIntegerInstance();
+
+        // 雙向綁定 TextField 和 Slider
+        progressField.textProperty().bindBidirectional(slider.valueProperty(), new StringConverter<Number>() {
+            public String toString(Number object) {
+                return format.format(object);
+            }
+
+            public Number fromString(String string) {
+                try {
+                    return format.parse(string);
+                } catch (ParseException e) {
+                    return 0;
+                }
+            }
+        });
 
 //        儲存修改
         Button saveButton = new Button("Save");
@@ -204,6 +208,7 @@ public class MainController {
         dialog.setScene(dialogScene);
         dialog.show();
     }
+
 
     private void handleEditTask(TextField editTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog, Task selectedTask) {
         try {
@@ -226,6 +231,7 @@ public class MainController {
             if (progress == 100) {
                 deleteTaskElement();
             }
+            deleteTaskElement();
             storeToListView(selectedTask);
             taskStorage.saveTasksToFile(taskListView.getItems());
             dialog.close();
@@ -234,6 +240,16 @@ public class MainController {
         } catch (Exception e) {
             showErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
         }
+    }
+
+    private void storeToListView(Task newTask) {
+        if (newTask.getCompleted() < 100) {
+            taskListView.getItems().add(newTask);
+        } else {
+            System.out.println("Task already completed");
+            finishedListView.getItems().add(newTask);
+        }
+
     }
 
     private void checkLegality(String taskName, LocalDate startDate, LocalDate endDate, Integer progress) {
@@ -262,6 +278,7 @@ public class MainController {
             showErrorDialog("Selection Error", "No task selected");
         }
     }
+
     @FXML
     protected void deleteFinishedTaskElement() {
         int selectedIndex = finishedListView.getSelectionModel().getSelectedIndex();
