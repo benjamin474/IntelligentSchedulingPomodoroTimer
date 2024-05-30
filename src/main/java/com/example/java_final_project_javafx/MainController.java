@@ -41,11 +41,13 @@ public class MainController {
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
         taskStorage.loadTasksFromFile(taskListView.getItems());
+        durationField.setText("25");
     }
 
     @FXML
     protected void startTimer() {
         String durationText = durationField.getText();
+        
         try {
             int duration = Integer.parseInt(durationText) * 60;
             timeRemaining = duration;
