@@ -25,6 +25,8 @@
                 <TextField fx:id="durationField" promptText="Duration (minutes)" />
                 <Button text="Start" onAction="#startTimer"/>
             </HBox>
+            <Label text="Expiring" />
+<!--            <ListView fx:""-->
         </VBox>
     </left>
     <center>
@@ -37,7 +39,7 @@
             <HBox spacing="10.0">
                 <Button text="Add" onAction="#showAddTaskDialog"/>
                 <Button text="Edit" onAction="#showEditTaskDialog"/>
-                <Button text="Delete" onAction="#deleteTask"/>
+                <Button text="Delete" onAction="#deleteTaskElement"/>
                 <Button text="Finish" onAction="#finishTask"/>
                 <Button text="View" onAction="#viewTaskDetails"/>
             </HBox>
@@ -53,7 +55,7 @@
             <Label text = "Finished tasks"/>
             <ListView fx:id="finishedListView"/>
             <HBox spacing = "10.0">
-                <Button text = "Delete" onAction="#deleteTask"/>
+                <Button text = "Delete" onAction="#deleteTaskElement"/>
             </HBox>
         </VBox>
     </right>

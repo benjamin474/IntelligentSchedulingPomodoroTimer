@@ -56,7 +56,7 @@ public class MainController {
 
         try {
             int duration = Integer.parseInt(durationText) * 60;
-            if(duration < 0)
+            if (duration <= 0)
                 showErrorDialog("Input Error", "Please enter a positive number");
 
             timeRemaining = duration;
@@ -120,12 +120,12 @@ public class MainController {
         slider.setMax(100);
         slider.setValue(0);
         slider.setBlockIncrement(1);
-                
+
         NumberFormat format = NumberFormat.getIntegerInstance();
 
         // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
-        progressField.textProperty().bind(Bindings.createStringBinding(() -> 
-            format.format(slider.getValue()), slider.valueProperty()));
+        progressField.textProperty().bind(Bindings.createStringBinding(() ->
+                format.format(slider.getValue()), slider.valueProperty()));
 
         Button addButton = new Button("Add");
         addButton.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
@@ -140,7 +140,6 @@ public class MainController {
 
     private void handleAddTask(TextField newTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog) {
         try {
-
             String newTaskName = newTaskField.getText();
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
@@ -149,8 +148,10 @@ public class MainController {
             checkLegality(newTaskName, startDate, endDate, progress);
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
+
             // 增加並儲存至文件
-            taskListView.getItems().add(newTask);
+            storeToListView(newTask);
+
             taskStorage.saveTasksToFile(taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
@@ -158,6 +159,16 @@ public class MainController {
         } catch (Exception e) {
             showErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
         }
+    }
+
+    private void storeToListView(Task newTask) {
+        if (newTask.getCompleted() < 100) {
+            taskListView.getItems().add(newTask);
+        } else {
+            System.out.println("Task already completed");
+            finishedListView.getItems().add(newTask);
+        }
+
     }
 
     @FXML
@@ -210,7 +221,12 @@ public class MainController {
             selectedTask.setCompleted(progress);
 
             taskListView.refresh();
+            finishedListView.refresh();
             // 儲存任務
+            if (progress == 100) {
+                deleteTaskElement();
+            }
+            storeToListView(selectedTask);
             taskStorage.saveTasksToFile(taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
@@ -236,7 +252,7 @@ public class MainController {
     }
 
     @FXML
-    protected void deleteTask() {
+    protected void deleteTaskElement() {
         int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             // 刪除該任務並保存進度
@@ -244,6 +260,13 @@ public class MainController {
             taskStorage.saveTasksToFile(taskListView.getItems());
         } else {
             showErrorDialog("Selection Error", "No task selected");
+        }
+    }
+    protected void deleteFinishedTaskElement() {
+        int selectedIndex = finishedListView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            finishedListView.getItems().remove(selectedIndex);
+            taskStorage.saveTasksToFile(taskListView.getItems());
         }
     }
 
