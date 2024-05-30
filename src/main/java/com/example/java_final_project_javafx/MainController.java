@@ -28,11 +28,15 @@ public class MainController {
     @FXML
     private ListView<Task> taskListView;
 
+//    @FXML
+//    private ListView<String> workflowListView;
     @FXML
-    private ListView<String> workflowListView;
+    private ListView<Task> finishedListView;
 
     private Timer timer;
     private int timeRemaining;
+    public final int TASK = 1;
+    public final int FINISH = 2;
 
     private TaskStorage taskStorage = new TaskStorage();
 

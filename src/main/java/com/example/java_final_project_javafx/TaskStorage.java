@@ -1,19 +1,24 @@
 package com.example.java_final_project_javafx;
 
-import javafx.collections.ObservableList;
-
 import java.io.*;
-import java.nio.Buffer;
 import java.time.LocalDate;
 import java.util.List;
 
 public class TaskStorage {
 
     private static final String TASKS_FILE = "Tasks.csv";
+    private static final String FINISH_TASKS_FILE = "FinishedTasks.csv";
+    public final int UNFINISHED_TASK = 1;
+    public final int FINISHED_TASK = 2;
 
     public void saveTasksToFile(List<Task> tasks) {
 //       儲存任務資料
-        try (PrintWriter writer = new PrintWriter(new File(TASKS_FILE))) {
+        File file;
+        int taskType = UNFINISHED_TASK;
+        file = new File(TASKS_FILE);
+        if (taskType == FINISHED_TASK)
+            file = new File(FINISH_TASKS_FILE);
+        try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task : tasks) {
                 writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
             }
@@ -24,7 +29,7 @@ public class TaskStorage {
 
     }
 
-    public void loadTasksFromFile(ObservableList<Task> tasks) {
+    public void loadTasksFromFile(List<Task> tasks) {
 //        加載任務資料
         File file = new File(TASKS_FILE);
         System.out.println("Loading tasks from file: " + file.getAbsolutePath());
@@ -41,7 +46,7 @@ public class TaskStorage {
                 Task task = new Task(name, startDate, endDate, completed);
                 tasks.add(task);
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
