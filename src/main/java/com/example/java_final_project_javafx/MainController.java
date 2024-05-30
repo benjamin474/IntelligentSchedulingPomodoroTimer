@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.beans.binding.Bindings;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -110,12 +112,24 @@ public class MainController {
         progressField.setText("0");
         progressField.setPromptText("Completion (0 - 100%)");
 
+        Slider slider = new Slider();
+        slider.setMin(0);
+        slider.setMax(100);
+        slider.setValue(0);
+        slider.setBlockIncrement(1);
+                
+        NumberFormat format = NumberFormat.getIntegerInstance();
+
+        // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
+        progressField.textProperty().bind(Bindings.createStringBinding(() -> 
+            format.format(slider.getValue()), slider.valueProperty()));
+
         Button addButton = new Button("Add");
         addButton.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
 
         newTaskField.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
 
-        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, addButton);
+        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton);
         Scene dialogScene = new Scene(dialogVbox, 300, 300);
         dialog.setScene(dialogScene);
         dialog.show();
