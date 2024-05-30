@@ -107,7 +107,7 @@ public class MainController {
 
         // 輸入完成度
         TextField progressField = new TextField();
-        progressField.setText("100");
+        progressField.setText("0");
         progressField.setPromptText("Completion (0 - 100%)");
 
         Button addButton = new Button("Add");
