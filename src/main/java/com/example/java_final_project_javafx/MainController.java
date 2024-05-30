@@ -78,15 +78,20 @@ public class MainController {
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         VBox dialogVbox = new VBox(20);
+
+        // 輸入任務名稱
         TextField newTaskField = new TextField();
+        newTaskField.setText("Task 1");
         newTaskField.setPromptText("Enter new task");
 
         // 開始日期
         DatePicker startDatePicker = new DatePicker();
+        startDatePicker.setValue(LocalDate.now());
         startDatePicker.setPromptText("Start date");
 
         // 結束日期
         DatePicker endDatePicker = new DatePicker();
+        endDatePicker.setValue(LocalDate.now());
         endDatePicker.setPromptText("End date");
 
         // 結束日期早於開始日期會反紅
@@ -95,6 +100,7 @@ public class MainController {
 
         // 輸入完成度
         TextField progressField = new TextField();
+        progressField.setText("100");
         progressField.setPromptText("Completion (0-100%)");
 
         Button addButton = new Button("Add");
