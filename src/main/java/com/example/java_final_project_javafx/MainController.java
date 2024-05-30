@@ -45,31 +45,32 @@ public class MainController {
 
     @FXML
     protected void startTimer() {
-        // Timer 目前異常
-//        String durationText = durationField.getText();
-//        try {
-//            int duration = Integer.parseInt(durationText) * 60;
-//            timeRemaining = duration;
-//            if (timer != null) {
-//                timer.cancel();
-//            }
-//            timer = new Timer();
-//            timer.scheduleAtFixedRate(new TimerTask() {
-//                @Override
-//                public void run() {
-//                    timeRemaining--;
-//                    int minutes = timeRemaining / 60;
-//                    int seconds = timeRemaining % 60;
-//                    timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
-//                    if (timeRemaining <= 0) {
-//                        timer.cancel();
-//                    }
-//                }
-//            }, 0, 1000);
-//        } catch (NumberFormatException e) {
-//            showErrorDialog("Input Error", "Please enter a valid number");
-//        }
-        System.out.println("Starting timer");
+        String durationText = durationField.getText();
+        try {
+            int duration = Integer.parseInt(durationText) * 60;
+            timeRemaining = duration;
+            if (timer != null) {
+                timer.cancel();
+            }
+            timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    // JavaFX UI操作需要在JavaFX Application线程中执行
+                    javafx.application.Platform.runLater(() -> {
+                        timeRemaining--;
+                        int minutes = timeRemaining / 60;
+                        int seconds = timeRemaining % 60;
+                        timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
+                        if (timeRemaining <= 0) {
+                            timer.cancel();
+                        }
+                    });
+                }
+            }, 0, 1000);
+        } catch (NumberFormatException e) {
+            showErrorDialog("Input Error", "Please enter a valid number");
+        }
     }
 
     @FXML
