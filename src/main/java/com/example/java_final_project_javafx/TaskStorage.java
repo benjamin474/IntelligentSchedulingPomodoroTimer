@@ -19,13 +19,14 @@ public class TaskStorage {
 //       }catch(IOException e){
 //           e.printStackTrace();
 //       }
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(TASKS_FILE))) {
-            out.writeObject(tasks);
-            System.out.println("Saving tasks to file: " + new File(TASKS_FILE).getAbsolutePath());
-        } catch (IOException e) {
-            System.err.println("Error saving tasks to file: " + e.getMessage());
-//            e.printStackTrace();
-        }
+//        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(TASKS_FILE))) {
+//            out.writeObject(tasks);
+//            System.out.println("Saving tasks to file: " + new File(TASKS_FILE).getAbsolutePath());
+//        } catch (IOException e) {
+//            System.err.println("Error saving tasks to file: " + e.getMessage());
+////            e.printStackTrace();
+//        }
+
     }
 
     public void loadTasksFromFile(ObservableList<Task> tasks) {
