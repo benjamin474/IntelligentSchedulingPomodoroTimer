@@ -38,6 +38,7 @@
                 <Button text="Add" onAction="#showAddTaskDialog"/>
                 <Button text="Edit" onAction="#showEditTaskDialog"/>
                 <Button text="Delete" onAction="#deleteTask"/>
+<!--                <Button text="Finish" onAction="#finishTask"/>-->
                 <Button text="View" onAction="#viewTaskDetails"/>
             </HBox>
         </VBox>
@@ -47,8 +48,13 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Label text="Workflow"/>
-            <ListView fx:id="workflowListView"/>
+<!--            <Label text="Workflow"/>-->
+<!--            <ListView fx:id="workflowListView"/>-->
+            <Label text = "Finished tasks"/>
+            <ListView fx:id="finishedListView"/>
+            <HBox spacing = "10.0">
+                <Button text = "Delete" onAction="#deleteTask"/>
+            </HBox>
         </VBox>
     </right>
 </BorderPane>
