@@ -63,6 +63,7 @@ public class Task implements Serializable {
     }
 
     public int calculateTotalProgress() {
+        // 檢查子任務狀況
         if (completed != null) {
             return completed;
         }

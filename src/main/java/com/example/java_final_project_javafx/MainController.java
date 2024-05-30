@@ -46,34 +46,34 @@ public class MainController {
     @FXML
     protected void startTimer() {
         // Timer 目前異常
-        String durationText = durationField.getText();
-        try {
-            int duration = Integer.parseInt(durationText) * 60;
-            timeRemaining = duration;
-            if (timer != null) {
-                timer.cancel();
-            }
-            timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    timeRemaining--;
-                    int minutes = timeRemaining / 60;
-                    int seconds = timeRemaining % 60;
-                    timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
-                    if (timeRemaining <= 0) {
-                        timer.cancel();
-                    }
-                }
-            }, 0, 1000);
-        } catch (NumberFormatException e) {
-            showErrorDialog("Input Error", "Please enter a valid number");
-        }
+//        String durationText = durationField.getText();
+//        try {
+//            int duration = Integer.parseInt(durationText) * 60;
+//            timeRemaining = duration;
+//            if (timer != null) {
+//                timer.cancel();
+//            }
+//            timer = new Timer();
+//            timer.scheduleAtFixedRate(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    timeRemaining--;
+//                    int minutes = timeRemaining / 60;
+//                    int seconds = timeRemaining % 60;
+//                    timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
+//                    if (timeRemaining <= 0) {
+//                        timer.cancel();
+//                    }
+//                }
+//            }, 0, 1000);
+//        } catch (NumberFormatException e) {
+//            showErrorDialog("Input Error", "Please enter a valid number");
+//        }
+        System.out.println("Starting timer");
     }
 
     @FXML
     protected void showAddTaskDialog() {
-
         // 新增頁面初始化
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -117,13 +117,16 @@ public class MainController {
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
 
             if (newTaskName.isEmpty()) {
-                throw new IllegalArgumentException("Task cannot be empty");
+                throw new IllegalArgumentException("任務名稱不得為空");
             }
             if (startDate == null || endDate == null) {
-                throw new IllegalArgumentException("Please select start and end dates");
+                throw new IllegalArgumentException("請輸入起訖日期");
+            }
+            if(endDate.isBefore(startDate)) {
+                throw new IllegalArgumentException("結束日期不可早於開始日期");
             }
             if (progress != null && (progress < 0 || progress > 100)) {
-                throw new IllegalArgumentException("Completion must be between 0 and 100");
+                throw new IllegalArgumentException("完成度只在0~100%之間");
             }
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
