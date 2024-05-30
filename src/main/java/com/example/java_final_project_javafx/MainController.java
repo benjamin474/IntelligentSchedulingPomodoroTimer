@@ -84,7 +84,7 @@ public class MainController {
 
         // 輸入任務名稱
         TextField newTaskField = new TextField();
-        newTaskField.setText("Task 1");
+        newTaskField.setText("Task " + (taskListView.getItems().size() + 1));
         newTaskField.setPromptText("Enter new task");
 
         // 開始日期
