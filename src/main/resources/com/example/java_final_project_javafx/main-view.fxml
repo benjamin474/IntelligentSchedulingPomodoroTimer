@@ -55,7 +55,7 @@
             <Label text = "Finished tasks"/>
             <ListView fx:id="finishedListView"/>
             <HBox spacing = "10.0">
-                <Button text = "Delete" onAction="#deleteTaskElement"/>
+                <Button text = "Delete" onAction="#deleteFinishedTaskElement"/>
             </HBox>
         </VBox>
     </right>

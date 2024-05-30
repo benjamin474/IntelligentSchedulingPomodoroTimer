@@ -262,6 +262,7 @@ public class MainController {
             showErrorDialog("Selection Error", "No task selected");
         }
     }
+    @FXML
     protected void deleteFinishedTaskElement() {
         int selectedIndex = finishedListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
