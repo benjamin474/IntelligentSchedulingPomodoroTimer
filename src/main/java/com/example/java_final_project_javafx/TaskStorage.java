@@ -11,6 +11,14 @@ public class TaskStorage {
 
     public void saveTasksToFile(List<Task> tasks) {
 //       儲存任務資料
+//       try (BufferedWriter writer = new BufferedWriter(new FileWriter(TASKS_FILE))){
+//           for(Task task : tasks) {
+//               writer.write(task);
+//               writer.newLine();
+//           }
+//       }catch(IOException e){
+//           e.printStackTrace();
+//       }
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(TASKS_FILE))) {
             out.writeObject(tasks);
             System.out.println("Saving tasks to file: " + new File(TASKS_FILE).getAbsolutePath());
@@ -29,12 +37,17 @@ public class TaskStorage {
                 System.out.println("The File is empty");
                 return;
             }
-            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-                List<Task> loadedTasks = (List<Task>) in.readObject();
-                tasks.addAll(loadedTasks);
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+//            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
+//                List<Task> loadedTasks = (List<Task>) in.readObject();
+//                tasks.addAll(loadedTasks);
+//            } catch (IOException | ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            try(BufferedReader reader = new BufferedReader(new FileReader(TASKS_FILE))){
+//                String line;
+//
+//
+//            }
         }
     }
 }

@@ -130,8 +130,8 @@ public class MainController {
             }
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
+            // 增加並儲存至文件
             taskListView.getItems().add(newTask);
-            // 儲存任務
             taskStorage.saveTasksToFile(taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
@@ -177,8 +177,6 @@ public class MainController {
 
     private void handleEditTask(TextField editTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog, Task selectedTask) {
         try {
-
-
             String editedTaskName = editTaskField.getText();
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
@@ -214,8 +212,9 @@ public class MainController {
     protected void deleteTask() {
         int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
+            // 刪除該任務並保存進度
             taskListView.getItems().remove(selectedIndex);
-            taskStorage.saveTasksToFile(taskListView.getItems()); // 保存任务到文件
+            taskStorage.saveTasksToFile(taskListView.getItems());
         } else {
             showErrorDialog("Selection Error", "No task selected");
         }
