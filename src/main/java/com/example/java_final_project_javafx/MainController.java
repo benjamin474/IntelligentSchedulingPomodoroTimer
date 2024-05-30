@@ -230,9 +230,8 @@ public class MainController {
             // 儲存任務
             if (progress == 100) {
                 deleteTaskElement();
-            }
-            deleteTaskElement();
-            storeToListView(selectedTask);
+                finishedListView.getItems().add(selectedTask);
+            } 
             taskStorage.saveTasksToFile(taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
