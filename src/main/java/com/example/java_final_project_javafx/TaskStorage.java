@@ -13,13 +13,6 @@ public class TaskStorage {
 
     public void saveTasksToFile(List<Task> tasks) {
 //       儲存任務資料
-//        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(TASKS_FILE))) {
-//            out.writeObject(tasks);
-//            System.out.println("Saving tasks to file: " + new File(TASKS_FILE).getAbsolutePath());
-//        } catch (IOException e) {
-//            System.err.println("Error saving tasks to file: " + e.getMessage());
-////            e.printStackTrace();
-//        }
         try (PrintWriter writer = new PrintWriter(new File(TASKS_FILE))) {
             for (Task task : tasks) {
                 writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
@@ -32,6 +25,7 @@ public class TaskStorage {
     }
 
     public void loadTasksFromFile(ObservableList<Task> tasks) {
+//        加載任務資料
         File file = new File(TASKS_FILE);
         System.out.println("Loading tasks from file: " + file.getAbsolutePath());
 

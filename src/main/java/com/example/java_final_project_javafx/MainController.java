@@ -125,18 +125,7 @@ public class MainController {
             LocalDate endDate = endDatePicker.getValue();
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
 
-            if (newTaskName.isEmpty()) {
-                throw new IllegalArgumentException("Task cannot be empty");
-            }
-            if (startDate == null || endDate == null) {
-                throw new IllegalArgumentException("Please enter a valid date");
-            }
-            if(endDate.isBefore(startDate)) {
-                throw new IllegalArgumentException("End date cannot earlier than start date");
-            }
-            if (progress != null && (progress < 0 || progress > 100)) {
-                throw new IllegalArgumentException("Progress must be between 0 and 100");
-            }
+            checkLegality(newTaskName,startDate,endDate,progress);
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
             // 增加並儲存至文件
@@ -191,15 +180,8 @@ public class MainController {
             LocalDate endDate = endDatePicker.getValue();
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
 
-            if (editedTaskName.isEmpty()) {
-                throw new IllegalArgumentException("Task cannot be empty");
-            }
-            if (startDate == null || endDate == null) {
-                throw new IllegalArgumentException("Please select start and end dates");
-            }
-            if (progress != null && (progress < 0 || progress > 100)) {
-                throw new IllegalArgumentException("Completion must be between 0 and 100");
-            }
+            checkLegality(editedTaskName,startDate,endDate,progress);
+
 
             selectedTask.setName(editedTaskName);
             selectedTask.setStartDate(startDate);
@@ -214,6 +196,21 @@ public class MainController {
             showErrorDialog("Input Error", e.getMessage());
         } catch (Exception e) {
             showErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
+        }
+    }
+
+    private void checkLegality(String taskName,LocalDate startDate, LocalDate endDate, Integer progress){
+        if (taskName.isEmpty()) {
+            throw new IllegalArgumentException("Task cannot be empty");
+        }
+        if(endDate.isBefore(startDate)) {
+            throw new IllegalArgumentException("End date cannot earlier than start date");
+        }
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Please select start and end dates");
+        }
+        if (progress != null && (progress < 0 || progress > 100)) {
+            throw new IllegalArgumentException("Completion must be between 0 and 100");
         }
     }
 
