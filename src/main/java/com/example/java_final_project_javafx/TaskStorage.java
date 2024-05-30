@@ -8,15 +8,15 @@ public class TaskStorage {
 
     private static final String TASKS_FILE = "Tasks.csv";
     private static final String FINISH_TASKS_FILE = "FinishedTasks.csv";
-    public final int UNFINISHED_TASK = 1;
-    public final int FINISHED_TASK = 2;
+    public final int TASK = 1;
+    public final int FINISHED = 2;
 
     public void saveTasksToFile(List<Task> tasks) {
 //       儲存任務資料
         File file;
-        int taskType = UNFINISHED_TASK;
+        int taskType = TASK;
         file = new File(TASKS_FILE);
-        if (taskType == FINISHED_TASK)
+        if (taskType == FINISHED)
             file = new File(FINISH_TASKS_FILE);
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task : tasks) {
@@ -50,23 +50,10 @@ public class TaskStorage {
             e.printStackTrace();
         }
 
-
-//        if (file.exists()) {
-//            if (file.length() == 0) {
-//                System.out.println("The File is empty");
-//                return;
-//            }
-//            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
-//                List<Task> loadedTasks = (List<Task>) in.readObject();
-//                tasks.addAll(loadedTasks);
-//            } catch (IOException | ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            try(BufferedReader reader = new BufferedReader(new FileReader(TASKS_FILE))){
-//                String line;
+//        public void moveTask(Task task){
 //
-//
-//            }
 //        }
+
+
     }
 }

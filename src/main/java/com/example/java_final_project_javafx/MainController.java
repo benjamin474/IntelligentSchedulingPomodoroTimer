@@ -28,7 +28,7 @@ public class MainController {
     @FXML
     private ListView<Task> taskListView;
 
-//    @FXML
+    //    @FXML
 //    private ListView<String> workflowListView;
     @FXML
     private ListView<Task> finishedListView;
@@ -51,9 +51,12 @@ public class MainController {
     @FXML
     protected void startTimer() {
         String durationText = durationField.getText();
-        
+
         try {
             int duration = Integer.parseInt(durationText) * 60;
+            if(duration < 0)
+                showErrorDialog("Input Error", "Please enter a positive number");
+
             timeRemaining = duration;
             if (timer != null) {
                 timer.cancel();
@@ -62,7 +65,7 @@ public class MainController {
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    // JavaFX UI操作需要在JavaFX Application线程中执行
+                    // JavaFX UI操作需要在JavaFX Application Thread中執行
                     javafx.application.Platform.runLater(() -> {
                         timeRemaining--;
                         int minutes = timeRemaining / 60;
@@ -129,7 +132,7 @@ public class MainController {
             LocalDate endDate = endDatePicker.getValue();
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
 
-            checkLegality(newTaskName,startDate,endDate,progress);
+            checkLegality(newTaskName, startDate, endDate, progress);
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
             // 增加並儲存至文件
@@ -184,7 +187,7 @@ public class MainController {
             LocalDate endDate = endDatePicker.getValue();
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
 
-            checkLegality(editedTaskName,startDate,endDate,progress);
+            checkLegality(editedTaskName, startDate, endDate, progress);
 
 
             selectedTask.setName(editedTaskName);
@@ -203,11 +206,11 @@ public class MainController {
         }
     }
 
-    private void checkLegality(String taskName,LocalDate startDate, LocalDate endDate, Integer progress){
+    private void checkLegality(String taskName, LocalDate startDate, LocalDate endDate, Integer progress) {
         if (taskName.isEmpty()) {
             throw new IllegalArgumentException("Task cannot be empty");
         }
-        if(endDate.isBefore(startDate)) {
+        if (endDate.isBefore(startDate)) {
             throw new IllegalArgumentException("End date cannot earlier than start date");
         }
         if (startDate == null || endDate == null) {
@@ -228,6 +231,12 @@ public class MainController {
         } else {
             showErrorDialog("Selection Error", "No task selected");
         }
+    }
+
+    @FXML
+    protected void finishTask() {
+        int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
+//        if()
     }
 
     @FXML

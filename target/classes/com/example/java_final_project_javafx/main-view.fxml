@@ -19,7 +19,7 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <Label text="Countdown Timer"/>
-            <Label fx:id="timerLabel" text="25:00" style="-fx-font-size: 30px;"/>
+            <Label fx:id="timerLabel" text="Focus Time" style="-fx-font-size: 30px;"/>
             <TextField fx:id="taskField" promptText="Enter main task"/>
             <HBox spacing="10.0">
                 <TextField fx:id="durationField" promptText="Duration (minutes)" />
@@ -38,7 +38,7 @@
                 <Button text="Add" onAction="#showAddTaskDialog"/>
                 <Button text="Edit" onAction="#showEditTaskDialog"/>
                 <Button text="Delete" onAction="#deleteTask"/>
-<!--                <Button text="Finish" onAction="#finishTask"/>-->
+                <Button text="Finish" onAction="#finishTask"/>
                 <Button text="View" onAction="#viewTaskDetails"/>
             </HBox>
         </VBox>
