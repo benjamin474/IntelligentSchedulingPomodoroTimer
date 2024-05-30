@@ -117,16 +117,16 @@ public class MainController {
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
 
             if (newTaskName.isEmpty()) {
-                throw new IllegalArgumentException("任務名稱不得為空");
+                throw new IllegalArgumentException("Task cannot be empty");
             }
             if (startDate == null || endDate == null) {
-                throw new IllegalArgumentException("請輸入起訖日期");
+                throw new IllegalArgumentException("Please enter a valid date");
             }
             if(endDate.isBefore(startDate)) {
-                throw new IllegalArgumentException("結束日期不可早於開始日期");
+                throw new IllegalArgumentException("End date cannot earlier than start date");
             }
             if (progress != null && (progress < 0 || progress > 100)) {
-                throw new IllegalArgumentException("完成度只在0~100%之間");
+                throw new IllegalArgumentException("Progress must be between 0 and 100");
             }
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
