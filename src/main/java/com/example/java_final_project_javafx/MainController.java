@@ -88,6 +88,7 @@ public class MainController {
 
     @FXML
     protected void showAddTaskDialog() {
+        /*
         // 新增頁面初始化
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
@@ -117,6 +118,18 @@ public class MainController {
         TextField progressField = new TextField();
         progressField.setText("0");
         progressField.setPromptText("Completion (0 - 100%)");
+        
+        Slider slider = new Slider();
+        slider.setMin(0);
+        slider.setMax(100);
+        slider.setValue(0);
+        slider.setBlockIncrement(1);
+                
+        NumberFormat format = NumberFormat.getIntegerInstance();
+
+        // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
+        progressField.textProperty().bind(Bindings.createStringBinding(() -> 
+            format.format(slider.getValue()), slider.valueProperty()));
 
 
         Button addButton = new Button("Add");
@@ -124,10 +137,12 @@ public class MainController {
 
         newTaskField.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
 
-        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, addButton);
+        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton);
         Scene dialogScene = new Scene(dialogVbox, 300, 300);
         dialog.setScene(dialogScene);
         dialog.show();
+        */
+        new TaskDialog(taskListView);
     }
 
     private void handleAddTask(TextField newTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog) {
