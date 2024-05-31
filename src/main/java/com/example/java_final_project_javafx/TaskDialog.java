@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,13 +33,17 @@ public class TaskDialog {
     Button cancelButton = new Button("Cancel");
     Button addButton = new Button("Add");
     NumberFormat format = NumberFormat.getInstance();
-    TaskDialog(ListView<Task> taskListView) {
+    MainController mainController;
+    TaskDialog(MainController mainController) {
+        // store the task list view
+        this.mainController = mainController;
+        
         // initialize the dialog
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Add Task");
 
         // set the default values for the new task
-        newTaskField.setText("Task " + (taskListView.getItems().size() + 1));
+        newTaskField.setText("Task " + (mainController.getListViewSize(mainController.TASK) + 1));
         newTaskField.setPromptText("Enter new task");
 
         // set the default values for the new task
@@ -72,9 +77,12 @@ public class TaskDialog {
             format.format(intSliderValue.get()), intSliderValue)
         );
 
-        // addButton.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
+        // set the action for the save button
+        addButton.setOnAction(event -> handleTask());
+        cancelButton.setOnAction(event -> dialog.close());
 
-        // newTaskField.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
+        // set the action for the add button
+        newTaskField.setOnAction(event -> handleTask());
         
         dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton, cancelButton);
         // set the scene
@@ -107,4 +115,41 @@ public class TaskDialog {
         dialog.show();
     }
 
+    private void handleTask() {
+        try {
+            String newTaskName = newTaskField.getText();
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+            Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
+
+            checkLegality(newTaskName, startDate, endDate, progress);
+
+            Task newTask = new Task(newTaskName, startDate, endDate, progress);
+
+            // 增加並儲存至文件
+            mainController.storeToListView(newTask);
+
+            mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
+            dialog.close();
+        } catch (IllegalArgumentException e) {
+            new ErrorDialog("Input Error", e.getMessage());
+        } catch (Exception e) {
+            new ErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
+        }
+    }
+
+    private void checkLegality(String taskName, LocalDate startDate, LocalDate endDate, Integer progress) {
+        if (taskName.isEmpty()) {
+            throw new IllegalArgumentException("Task cannot be empty");
+        }
+        if (endDate.isBefore(startDate)) {
+            throw new IllegalArgumentException("End date cannot earlier than start date");
+        }
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Please select start and end dates");
+        }
+        if (progress != null && (progress < 0 || progress > 100)) {
+            throw new IllegalArgumentException("Completion must be between 0 and 100");
+        }
+    }
 }

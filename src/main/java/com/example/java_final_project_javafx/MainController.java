@@ -30,7 +30,7 @@ public class MainController {
     private TextField durationField;
 
     @FXML
-    private ListView<Task> taskListView;
+    public ListView<Task> taskListView;
 
     //    @FXML
 //    private ListView<String> workflowListView;
@@ -42,7 +42,7 @@ public class MainController {
     public final int TASK = 1;
     public final int FINISH = 2;
 
-    private TaskStorage taskStorage = new TaskStorage();
+    public TaskStorage taskStorage = new TaskStorage();
 
     @FXML
     public void initialize() {
@@ -142,7 +142,7 @@ public class MainController {
         dialog.setScene(dialogScene);
         dialog.show();
         */
-        new TaskDialog(taskListView);
+        new TaskDialog(this);
     }
 
     private void handleAddTask(TextField newTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog) {
@@ -257,7 +257,7 @@ public class MainController {
         }
     }
 
-    private void storeToListView(Task newTask) {
+    public void storeToListView(Task newTask) {
         if (newTask.getCompleted() < 100) {
             taskListView.getItems().add(newTask);
         } else {
@@ -349,5 +349,14 @@ public class MainController {
 
     public void saveTasksToFile() {
         taskStorage.saveTasksToFile(taskListView.getItems());
+    }
+
+    public int getListViewSize(int type) {
+        if (type == TASK) {
+            return taskListView.getItems().size();
+        } else if (type == FINISH) {
+            return finishedListView.getItems().size();
+        }
+        return 0;
     }
 }
