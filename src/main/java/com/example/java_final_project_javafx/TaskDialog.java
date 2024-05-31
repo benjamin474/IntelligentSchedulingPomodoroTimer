@@ -1,9 +1,5 @@
 package com.example.java_final_project_javafx;
 
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.util.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
@@ -13,13 +9,8 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-import java.io.IOException;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class TaskDialog {
     Stage dialog = new Stage();
