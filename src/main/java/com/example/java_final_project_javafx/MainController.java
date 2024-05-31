@@ -91,6 +91,7 @@ public class MainController {
         // 新增頁面初始化
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
+
         VBox dialogVbox = new VBox(20);
 
         // 輸入任務名稱
@@ -231,7 +232,7 @@ public class MainController {
             if (progress == 100) {
                 deleteTaskElement();
                 finishedListView.getItems().add(selectedTask);
-            } 
+            }
             taskStorage.saveTasksToFile(taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
