@@ -83,33 +83,28 @@ public class TaskDialog {
 
         // set the action for the add button
         newTaskField.setOnAction(event -> handleTask());
-        
-        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton, cancelButton);
-        // set the scene
-        Scene dialogScene = new Scene(dialogVbox, 300, 300);
-        dialog.setScene(dialogScene);
-        dialog.show();
-
     }
-    TaskDialog(Task task) {
-        dialog.initModality(Modality.APPLICATION_MODAL);
+    TaskDialog(MainController mainController, Task task) {
+        // store the task list view
+        this(mainController);
+        
+        // initialize the dialog
         dialog.setTitle("Edit Task");
         newTaskField.setText(task.getName());
         startDatePicker.setValue(task.getStartDate());
         endDatePicker.setValue(task.getEndDate());
-        // progressField.setText(NumberFormat.getInstance().format(task.getProgress()));
-        // slider.setValue(task.getProgress());
-        dialogVbox.getChildren().add(new Label("Task Name"));
-        dialogVbox.getChildren().add(newTaskField);
-        dialogVbox.getChildren().add(new Label("Start Date"));
-        dialogVbox.getChildren().add(startDatePicker);
-        dialogVbox.getChildren().add(new Label("End Date"));
-        dialogVbox.getChildren().add(endDatePicker);
-        dialogVbox.getChildren().add(new Label("Progress"));
-        dialogVbox.getChildren().add(progressField);
-        dialogVbox.getChildren().add(slider);
-        dialogVbox.getChildren().add(saveButton);
-        dialogVbox.getChildren().add(cancelButton);
+        slider.setValue(task.getCompleted());
+
+        // set the action for the save button
+        addButton.setText("Save");
+
+        addButton.setOnAction(event -> handleEditTask(task));
+
+    }
+
+    public void show() {
+        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton, cancelButton);
+        // set the scene
         Scene dialogScene = new Scene(dialogVbox, 300, 300);
         dialog.setScene(dialogScene);
         dialog.show();
@@ -129,6 +124,36 @@ public class TaskDialog {
             // 增加並儲存至文件
             mainController.storeToListView(newTask);
 
+            mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
+            dialog.close();
+        } catch (IllegalArgumentException e) {
+            new ErrorDialog("Input Error", e.getMessage());
+        } catch (Exception e) {
+            new ErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
+        }
+    }
+
+    private void handleEditTask(Task selectedTask) {
+        try {
+            String editedTaskName = newTaskField.getText();
+            LocalDate startDate = startDatePicker.getValue();
+            LocalDate endDate = endDatePicker.getValue();
+            Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
+
+            checkLegality(editedTaskName, startDate, endDate, progress);
+
+            selectedTask.setName(editedTaskName);
+            selectedTask.setStartDate(startDate);
+            selectedTask.setEndDate(endDate);
+            selectedTask.setCompleted(progress);
+
+            mainController.taskListView.refresh();
+            mainController.finishedListView.refresh();
+            // 儲存任務
+            if (progress == 100) {
+                mainController.deleteTaskElement();
+                mainController.finishedListView.getItems().add(selectedTask);
+            }
             mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {

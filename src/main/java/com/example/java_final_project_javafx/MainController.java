@@ -3,18 +3,13 @@ package com.example.java_final_project_javafx;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.util.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
-import javafx.beans.binding.Bindings;
 
 import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,7 +30,7 @@ public class MainController {
     //    @FXML
 //    private ListView<String> workflowListView;
     @FXML
-    private ListView<Task> finishedListView;
+    public ListView<Task> finishedListView;
 
     private Timer timer;
     private int timeRemaining;
@@ -59,7 +54,7 @@ public class MainController {
         try {
             int duration = Integer.parseInt(durationText) * 60;
             if (duration <= 0)
-                showErrorDialog("Input Error", "Please enter a positive number");
+                new ErrorDialog("Input Error", "Please enter a positive number");
 
             timeRemaining = duration;
             if (timer != null) {
@@ -82,179 +77,28 @@ public class MainController {
                 }
             }, 0, 1000);
         } catch (NumberFormatException e) {
-            showErrorDialog("Input Error", "Please enter a valid number");
+            new ErrorDialog("Input Error", "Please enter a valid number");
         }
     }
 
     @FXML
     protected void showAddTaskDialog() {
-        /*
-        // 新增頁面初始化
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-
-        VBox dialogVbox = new VBox(20);
-
-        // 輸入任務名稱
-        TextField newTaskField = new TextField();
-        newTaskField.setText("Task " + (taskListView.getItems().size() + 1));
-        newTaskField.setPromptText("Enter new task");
-
-        // 開始日期
-        DatePicker startDatePicker = new DatePicker();
-        startDatePicker.setValue(LocalDate.now());
-        startDatePicker.setPromptText("Start date");
-
-        // 結束日期
-        DatePicker endDatePicker = new DatePicker();
-        endDatePicker.setValue(LocalDate.now());
-        endDatePicker.setPromptText("End date");
-
-        // 結束日期早於開始日期會反紅
-        Label errorLabel = new Label();
-        errorLabel.setStyle("-fx-text-fill: red;");
-
-        // 輸入完成度
-        TextField progressField = new TextField();
-        progressField.setText("0");
-        progressField.setPromptText("Completion (0 - 100%)");
-        
-        Slider slider = new Slider();
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setValue(0);
-        slider.setBlockIncrement(1);
-                
-        NumberFormat format = NumberFormat.getIntegerInstance();
-
-        // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
-        progressField.textProperty().bind(Bindings.createStringBinding(() -> 
-            format.format(slider.getValue()), slider.valueProperty()));
-
-
-        Button addButton = new Button("Add");
-        addButton.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
-
-        newTaskField.setOnAction(event -> handleAddTask(newTaskField, startDatePicker, endDatePicker, progressField, dialog));
-
-        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton);
-        Scene dialogScene = new Scene(dialogVbox, 300, 300);
-        dialog.setScene(dialogScene);
-        dialog.show();
-        */
-        new TaskDialog(this);
+        TaskDialog taskDialog = new TaskDialog(this);
+        taskDialog.show();
     }
-
-    private void handleAddTask(TextField newTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog) {
-        try {
-            String newTaskName = newTaskField.getText();
-            LocalDate startDate = startDatePicker.getValue();
-            LocalDate endDate = endDatePicker.getValue();
-            Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
-
-            checkLegality(newTaskName, startDate, endDate, progress);
-
-            Task newTask = new Task(newTaskName, startDate, endDate, progress);
-
-            // 增加並儲存至文件
-            storeToListView(newTask);
-
-            taskStorage.saveTasksToFile(taskListView.getItems());
-            dialog.close();
-        } catch (IllegalArgumentException e) {
-            showErrorDialog("Input Error", e.getMessage());
-        } catch (Exception e) {
-            showErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
-        }
-    }
-
 
     @FXML
     protected void showEditTaskDialog() {
+        // get the selected task
         Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
         if (selectedTask == null) {
-            showErrorDialog("Selection Error", "No task selected");
+            new ErrorDialog("Selection Error", "No task selected");
             return;
         }
 
-        Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        VBox dialogVbox = new VBox(20);
-        TextField editTaskField = new TextField(selectedTask.getName());
-        editTaskField.setPromptText("Edit task");
-
-//         起訖時間
-        DatePicker startDatePicker = new DatePicker(selectedTask.getStartDate());
-        DatePicker endDatePicker = new DatePicker(selectedTask.getEndDate());
-
-//         判斷完成度
-        TextField progressField = new TextField(selectedTask.getCompleted() != null ? String.valueOf(selectedTask.getCompleted()) : "");
-        progressField.setPromptText("Completion (0-100%)");
-        Slider slider = new Slider();
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setValue(0);
-        slider.setBlockIncrement(1);
-
-        NumberFormat format = NumberFormat.getIntegerInstance();
-
-        // 雙向綁定 TextField 和 Slider
-        progressField.textProperty().bindBidirectional(slider.valueProperty(), new StringConverter<Number>() {
-            public String toString(Number object) {
-                return format.format(object);
-            }
-
-            public Number fromString(String string) {
-                try {
-                    return format.parse(string);
-                } catch (ParseException e) {
-                    return 0;
-                }
-            }
-        });
-
-//        儲存修改
-        Button saveButton = new Button("Save");
-        saveButton.setOnAction(event -> handleEditTask(editTaskField, startDatePicker, endDatePicker, progressField, dialog, selectedTask));
-
-        editTaskField.setOnAction(event -> handleEditTask(editTaskField, startDatePicker, endDatePicker, progressField, dialog, selectedTask));
-
-        dialogVbox.getChildren().addAll(editTaskField, startDatePicker, endDatePicker, progressField, saveButton);
-        Scene dialogScene = new Scene(dialogVbox, 300, 300);
-        dialog.setScene(dialogScene);
-        dialog.show();
-    }
-
-
-    private void handleEditTask(TextField editTaskField, DatePicker startDatePicker, DatePicker endDatePicker, TextField progressField, Stage dialog, Task selectedTask) {
-        try {
-            String editedTaskName = editTaskField.getText();
-            LocalDate startDate = startDatePicker.getValue();
-            LocalDate endDate = endDatePicker.getValue();
-            Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
-
-            checkLegality(editedTaskName, startDate, endDate, progress);
-
-
-            selectedTask.setName(editedTaskName);
-            selectedTask.setStartDate(startDate);
-            selectedTask.setEndDate(endDate);
-            selectedTask.setCompleted(progress);
-
-            taskListView.refresh();
-            finishedListView.refresh();
-            // 儲存任務
-            if (progress == 100) {
-                deleteTaskElement();
-                finishedListView.getItems().add(selectedTask);
-            }
-            taskStorage.saveTasksToFile(taskListView.getItems());
-            dialog.close();
-        } catch (IllegalArgumentException e) {
-            showErrorDialog("Input Error", e.getMessage());
-        } catch (Exception e) {
-            showErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
-        }
+        // show the dialog
+        TaskDialog taskDialog = new TaskDialog(this, selectedTask);
+        taskDialog.show();
     }
 
     public void storeToListView(Task newTask) {
@@ -263,22 +107,6 @@ public class MainController {
         } else {
             System.out.println("Task already completed");
             finishedListView.getItems().add(newTask);
-        }
-
-    }
-
-    private void checkLegality(String taskName, LocalDate startDate, LocalDate endDate, Integer progress) {
-        if (taskName.isEmpty()) {
-            throw new IllegalArgumentException("Task cannot be empty");
-        }
-        if (endDate.isBefore(startDate)) {
-            throw new IllegalArgumentException("End date cannot earlier than start date");
-        }
-        if (startDate == null || endDate == null) {
-            throw new IllegalArgumentException("Please select start and end dates");
-        }
-        if (progress != null && (progress < 0 || progress > 100)) {
-            throw new IllegalArgumentException("Completion must be between 0 and 100");
         }
     }
 
@@ -290,7 +118,7 @@ public class MainController {
             taskListView.getItems().remove(selectedIndex);
             taskStorage.saveTasksToFile(taskListView.getItems());
         } else {
-            showErrorDialog("Selection Error", "No task selected");
+            new ErrorDialog("Selection Error", "No task selected");
         }
     }
 
@@ -313,7 +141,7 @@ public class MainController {
     protected void viewTaskDetails() {
         Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
         if (selectedTask == null) {
-            showErrorDialog("Selection Error", "No task selected");
+            new ErrorDialog("Selection Error", "No task selected");
             return;
         }
 
@@ -331,20 +159,6 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void showErrorDialog(String title, String message) {
-        Stage errorDialog = new Stage();
-        errorDialog.initModality(Modality.APPLICATION_MODAL);
-        errorDialog.setTitle(title);
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(new Label(message));
-        Button closeButton = new Button("Close");
-        closeButton.setOnAction(event -> errorDialog.close());
-        dialogVbox.getChildren().add(closeButton);
-        Scene dialogScene = new Scene(dialogVbox, 300, 150);
-        errorDialog.setScene(dialogScene);
-        errorDialog.show();
     }
 
     public void saveTasksToFile() {
