@@ -13,18 +13,26 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 
 public class TaskDialog {
+    // create the dialog
     Stage dialog = new Stage();
+
     VBox dialogVbox = new VBox(20);
+
     TextField newTaskField = new TextField();
+    TextField progressField = new TextField();
+
     DatePicker startDatePicker = new DatePicker();
     DatePicker endDatePicker = new DatePicker();
-    TextField progressField = new TextField();
+    
     Slider slider = new Slider();
-    Button saveButton = new Button("Save");
+
     Button cancelButton = new Button("Cancel");
     Button addButton = new Button("Add");
+
     NumberFormat format = NumberFormat.getInstance();
+
     MainController mainController;
+
     TaskDialog(MainController mainController) {
         // store the task list view
         this.mainController = mainController;
@@ -55,15 +63,15 @@ public class TaskDialog {
         slider.setValue(0);
         slider.setBlockIncrement(1);
                 
-        // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
+        // tie the slider's value to an integer property
         IntegerProperty intSliderValue = new SimpleIntegerProperty(0);
 
-        // 將滑桿的值綁定到整數屬性
+        // let the slider value be updated by the text field
         slider.valueProperty().addListener((obs, oldval, newVal) -> 
             intSliderValue.set(newVal.intValue())
         );
 
-        // 將文字框的 textProperty 綁定到整數屬性，並使用 NumberFormat 來格式化數字
+        // let the text field be updated by the slider value
         progressField.textProperty().bind(Bindings.createStringBinding(() -> 
             format.format(intSliderValue.get()), intSliderValue)
         );
@@ -112,10 +120,9 @@ public class TaskDialog {
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
 
-            // 增加並儲存至文件
+            // add the new task to the list view
             mainController.storeToListView(newTask);
 
-            mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
             new ErrorDialog("Input Error", e.getMessage());
@@ -137,15 +144,9 @@ public class TaskDialog {
             selectedTask.setStartDate(startDate);
             selectedTask.setEndDate(endDate);
             selectedTask.setCompleted(progress);
+            
+            mainController.saveTasksToFile();
 
-            mainController.taskListView.refresh();
-            mainController.finishedListView.refresh();
-            // 儲存任務
-            if (progress == 100) {
-                mainController.deleteTaskElement();
-                mainController.finishedListView.getItems().add(selectedTask);
-            }
-            mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
             new ErrorDialog("Input Error", e.getMessage());
