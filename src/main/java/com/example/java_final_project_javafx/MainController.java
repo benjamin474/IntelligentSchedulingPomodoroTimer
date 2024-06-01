@@ -44,6 +44,7 @@ public class MainController {
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
         taskStorage.loadTasksFromFile(taskListView.getItems());
+
         durationField.setText("25");
     }
 
@@ -133,8 +134,10 @@ public class MainController {
 
     @FXML
     protected void finishTask() {
-        int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
-//        if()
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+//        if(selectedTask != null) {
+//            selecte
+//        }
     }
 
     @FXML

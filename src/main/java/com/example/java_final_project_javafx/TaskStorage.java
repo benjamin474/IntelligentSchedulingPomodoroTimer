@@ -7,17 +7,17 @@ import java.util.List;
 public class TaskStorage {
 
     private static final String TASKS_FILE = "Tasks.csv";
-    private static final String FINISH_TASKS_FILE = "FinishedTasks.csv";
+    //    private static final String FINISH_TASKS_FILE = "FinishedTasks.csv";
     public final int TASK = 1;
     public final int FINISHED = 2;
 
     public void saveTasksToFile(List<Task> tasks) {
 //       儲存任務資料
         File file;
-        int taskType = TASK;
+//        int taskType = TASK;
         file = new File(TASKS_FILE);
-        if (taskType == FINISHED)
-            file = new File(FINISH_TASKS_FILE);
+//        if (taskType == FINISHED)
+//            file = new File(FINISH_TASKS_FILE);
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task : tasks) {
                 writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
@@ -45,6 +45,7 @@ public class TaskStorage {
                 Integer completed = Integer.parseInt(fields[3]);
                 Task task = new Task(name, startDate, endDate, completed);
                 tasks.add(task);
+
             }
         } catch (IOException e) {
             e.printStackTrace();

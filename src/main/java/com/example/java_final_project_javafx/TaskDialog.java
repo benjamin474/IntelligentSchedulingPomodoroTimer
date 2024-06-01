@@ -13,30 +13,22 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 
 public class TaskDialog {
-    // create the dialog
     Stage dialog = new Stage();
-
     VBox dialogVbox = new VBox(20);
-
     TextField newTaskField = new TextField();
-    TextField progressField = new TextField();
-
     DatePicker startDatePicker = new DatePicker();
     DatePicker endDatePicker = new DatePicker();
-    
+    TextField progressField = new TextField();
     Slider slider = new Slider();
-
+    Button saveButton = new Button("Save");
     Button cancelButton = new Button("Cancel");
     Button addButton = new Button("Add");
-
     NumberFormat format = NumberFormat.getInstance();
-
     MainController mainController;
-
     TaskDialog(MainController mainController) {
         // store the task list view
         this.mainController = mainController;
-        
+
         // initialize the dialog
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Add Task");
@@ -62,17 +54,17 @@ public class TaskDialog {
         slider.setMax(100);
         slider.setValue(0);
         slider.setBlockIncrement(1);
-                
-        // tie the slider's value to an integer property
+
+        // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
         IntegerProperty intSliderValue = new SimpleIntegerProperty(0);
 
-        // let the slider value be updated by the text field
-        slider.valueProperty().addListener((obs, oldval, newVal) -> 
+        // 將滑桿的值綁定到整數屬性
+        slider.valueProperty().addListener((obs, oldval, newVal) ->
             intSliderValue.set(newVal.intValue())
         );
 
-        // let the text field be updated by the slider value
-        progressField.textProperty().bind(Bindings.createStringBinding(() -> 
+        // 將文字框的 textProperty 綁定到整數屬性，並使用 NumberFormat 來格式化數字
+        progressField.textProperty().bind(Bindings.createStringBinding(() ->
             format.format(intSliderValue.get()), intSliderValue)
         );
 
@@ -86,7 +78,7 @@ public class TaskDialog {
     TaskDialog(MainController mainController, Task task) {
         // store the task list view
         this(mainController);
-        
+
         // initialize the dialog
         dialog.setTitle("Edit Task");
         newTaskField.setText(task.getName());
@@ -120,7 +112,7 @@ public class TaskDialog {
 
             Task newTask = new Task(newTaskName, startDate, endDate, progress);
 
-            // add the new task to the list view
+            // 增加並儲存至文件
             mainController.storeToListView(newTask);
 
             mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
@@ -148,7 +140,7 @@ public class TaskDialog {
 
             mainController.taskListView.refresh();
             mainController.finishedListView.refresh();
-            // restore the task to the list view if it is not completed
+            // 儲存任務
             if (progress == 100) {
                 mainController.deleteTaskElement();
                 mainController.finishedListView.getItems().add(selectedTask);

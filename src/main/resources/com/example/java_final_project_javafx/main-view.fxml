@@ -25,7 +25,7 @@
                 <TextField fx:id="durationField" promptText="Duration (minutes)" />
                 <Button text="Start" onAction="#startTimer"/>
             </HBox>
-            <Label text="Expiring" />
+<!--            <Label text="Expiring" />-->
 <!--            <ListView fx:""-->
         </VBox>
     </left>
