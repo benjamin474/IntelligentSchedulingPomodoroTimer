@@ -28,7 +28,7 @@ public class TaskDialog {
     TaskDialog(MainController mainController) {
         // store the task list view
         this.mainController = mainController;
-
+        
         // initialize the dialog
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Add Task");
@@ -54,17 +54,17 @@ public class TaskDialog {
         slider.setMax(100);
         slider.setValue(0);
         slider.setBlockIncrement(1);
-
+                
         // 將文字框的 textProperty 綁定到拉桿的 valueProperty，並使用 NumberFormat 來格式化數字
         IntegerProperty intSliderValue = new SimpleIntegerProperty(0);
 
         // 將滑桿的值綁定到整數屬性
-        slider.valueProperty().addListener((obs, oldval, newVal) ->
+        slider.valueProperty().addListener((obs, oldval, newVal) -> 
             intSliderValue.set(newVal.intValue())
         );
 
         // 將文字框的 textProperty 綁定到整數屬性，並使用 NumberFormat 來格式化數字
-        progressField.textProperty().bind(Bindings.createStringBinding(() ->
+        progressField.textProperty().bind(Bindings.createStringBinding(() -> 
             format.format(intSliderValue.get()), intSliderValue)
         );
 
@@ -78,7 +78,7 @@ public class TaskDialog {
     TaskDialog(MainController mainController, Task task) {
         // store the task list view
         this(mainController);
-
+        
         // initialize the dialog
         dialog.setTitle("Edit Task");
         newTaskField.setText(task.getName());
