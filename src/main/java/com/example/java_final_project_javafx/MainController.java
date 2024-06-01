@@ -25,12 +25,10 @@ public class MainController {
     private TextField durationField;
 
     @FXML
-    public ListView<Task> taskListView;
+    private ListView<Task> taskListView;
 
-    //    @FXML
-//    private ListView<String> workflowListView;
     @FXML
-    public ListView<Task> finishedListView;
+    private ListView<Task> finishedListView;
 
     private Timer timer;
     private int timeRemaining;
@@ -43,7 +41,7 @@ public class MainController {
     public void initialize() {
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
-        taskStorage.loadTasksFromFile(taskListView.getItems());
+        taskStorage.loadTasksFromFile(taskListView.getItems(), finishedListView.getItems());
         durationField.setText("25");
     }
 
@@ -102,12 +100,8 @@ public class MainController {
     }
 
     public void storeToListView(Task newTask) {
-        if (newTask.getCompleted() < 100) {
-            taskListView.getItems().add(newTask);
-        } else {
-            System.out.println("Task already completed");
-            finishedListView.getItems().add(newTask);
-        }
+        taskListView.getItems().add(newTask);
+        saveTasksToFile();
     }
 
     @FXML
@@ -116,7 +110,7 @@ public class MainController {
         if (selectedIndex >= 0) {
             // 刪除該任務並保存進度
             taskListView.getItems().remove(selectedIndex);
-            taskStorage.saveTasksToFile(taskListView.getItems());
+            taskStorage.saveTasksToFile(taskListView.getItems(), finishedListView.getItems());
         } else {
             new ErrorDialog("Selection Error", "No task selected");
         }
@@ -127,7 +121,7 @@ public class MainController {
         int selectedIndex = finishedListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             finishedListView.getItems().remove(selectedIndex);
-            taskStorage.saveTasksToFile(taskListView.getItems());
+            taskStorage.saveTasksToFile(taskListView.getItems(), finishedListView.getItems());
         }
     }
 
@@ -161,8 +155,21 @@ public class MainController {
         }
     }
 
+    private void getFinishedList() {
+        for (Task task : taskListView.getItems()) {
+            if (task.getCompleted() == 100) {
+                finishedListView.getItems().add(task);
+            }
+        }
+        for (Task task : finishedListView.getItems()) {
+            taskListView.getItems().remove(task);
+        }
+    }
+
     public void saveTasksToFile() {
-        taskStorage.saveTasksToFile(taskListView.getItems());
+        taskStorage.saveTasksToFile(taskListView.getItems(), finishedListView.getItems());
+        getFinishedList();
+        listRefresh();        
     }
 
     public int getListViewSize(int type) {
@@ -172,5 +179,10 @@ public class MainController {
             return finishedListView.getItems().size();
         }
         return 0;
+    }
+
+    public void listRefresh() {
+        taskListView.refresh();
+        finishedListView.refresh();
     }
 }

@@ -123,7 +123,6 @@ public class TaskDialog {
             // add the new task to the list view
             mainController.storeToListView(newTask);
 
-            mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
             new ErrorDialog("Input Error", e.getMessage());
@@ -145,15 +144,9 @@ public class TaskDialog {
             selectedTask.setStartDate(startDate);
             selectedTask.setEndDate(endDate);
             selectedTask.setCompleted(progress);
+            
+            mainController.saveTasksToFile();
 
-            mainController.taskListView.refresh();
-            mainController.finishedListView.refresh();
-            // restore the task to the list view if it is not completed
-            if (progress == 100) {
-                mainController.deleteTaskElement();
-                mainController.finishedListView.getItems().add(selectedTask);
-            }
-            mainController.taskStorage.saveTasksToFile(mainController.taskListView.getItems());
             dialog.close();
         } catch (IllegalArgumentException e) {
             new ErrorDialog("Input Error", e.getMessage());
