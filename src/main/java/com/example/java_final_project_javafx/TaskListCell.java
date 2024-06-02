@@ -12,6 +12,7 @@ public class TaskListCell extends ListCell<Task> {
     private Label nameLabel;
     private Label dateLabel;
     private Label commentLabel;
+    private Label brLabel = new Label("Comment:\n");
     private ProgressBar progressBar;
 
     public TaskListCell() {
@@ -21,8 +22,8 @@ public class TaskListCell extends ListCell<Task> {
         commentLabel = new Label();
         progressBar = new ProgressBar(0);
         progressBar.setMaxWidth(Double.MAX_VALUE);
+        VBox vBox = new VBox(nameLabel, dateLabel, brLabel, commentLabel);
 
-        VBox vBox = new VBox(nameLabel, dateLabel, commentLabel);
         HBox.setHgrow(vBox, Priority.ALWAYS);
 
         content = new HBox(vBox, progressBar);
