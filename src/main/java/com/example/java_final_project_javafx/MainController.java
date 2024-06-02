@@ -266,10 +266,11 @@ public class MainController {
     public void setChooseTaskButton(Boolean b) {
         if (b) {
             chooseTaskButton.setText("Choose Task");
+            chooseTaskButton.setDisable(false); // Enable the button
             selectedTask = null;
         }
         else {
             chooseTaskButton.setText(selectedTask.toString());
+            chooseTaskButton.setDisable(true); // Disable the button
         }
-    }
-}
+    }}
