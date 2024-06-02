@@ -76,6 +76,7 @@ public class MainController {
                                 int seconds = timeRemaining % 60;
                                 timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
                                 if (timeRemaining <= 0) {
+                                    new MessageDialog("End time", "Times up!");
                                     timer.cancel();
                                 }
                             }
