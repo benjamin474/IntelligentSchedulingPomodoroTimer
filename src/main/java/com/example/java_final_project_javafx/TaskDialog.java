@@ -97,6 +97,7 @@ public class TaskDialog {
         newTaskField.setText(task.getName());
         startDatePicker.setValue(task.getStartDate());
         endDatePicker.setValue(task.getEndDate());
+        commentField.setText(task.getComment());
         slider.setValue(task.getCompleted());
 
         // set the action for the save button

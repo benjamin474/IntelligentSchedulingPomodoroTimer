@@ -11,16 +11,18 @@ public class TaskListCell extends ListCell<Task> {
     private HBox content;
     private Label nameLabel;
     private Label dateLabel;
+    private Label commentLabel;
     private ProgressBar progressBar;
 
     public TaskListCell() {
         super();
         nameLabel = new Label();
         dateLabel = new Label();
+        commentLabel = new Label();
         progressBar = new ProgressBar(0);
         progressBar.setMaxWidth(Double.MAX_VALUE);
 
-        VBox vBox = new VBox(nameLabel, dateLabel);
+        VBox vBox = new VBox(nameLabel, dateLabel, commentLabel);
         HBox.setHgrow(vBox, Priority.ALWAYS);
 
         content = new HBox(vBox, progressBar);
@@ -35,6 +37,7 @@ public class TaskListCell extends ListCell<Task> {
         } else {
             nameLabel.setText(task.getName());
             dateLabel.setText(task.getStartDate() + " - " + task.getEndDate());
+            commentLabel.setText(task.getComment());
             progressBar.setProgress(task.calculateTotalProgress() / 100.0);
             setGraphic(content);
         }
