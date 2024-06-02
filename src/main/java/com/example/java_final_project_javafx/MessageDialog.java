@@ -1,38 +1,24 @@
 package com.example.java_final_project_javafx;
 
-import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.util.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
-import java.io.IOException;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class ErrorDialog {
+public class MessageDialog {
     Stage dialog = new Stage();
     VBox dialogVbox = new VBox(20);
     Label errorLabel = new Label();
     Button okButton = new Button("OK");
-    ErrorDialog(String errorMessage) {
+    
+    MessageDialog(String message) {
         // initialize the dialog
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Error");
 
         // set the error message
-        errorLabel.setText(errorMessage);
+        errorLabel.setText(message);
 
         // add the error label to the dialog
         dialogVbox.getChildren().add(errorLabel);
@@ -51,7 +37,7 @@ public class ErrorDialog {
         okButton.setOnAction(e -> dialog.close());
     }
 
-    ErrorDialog(String title, String message) {
+    MessageDialog(String title, String message) {
         // initialize the dialog
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle(title);

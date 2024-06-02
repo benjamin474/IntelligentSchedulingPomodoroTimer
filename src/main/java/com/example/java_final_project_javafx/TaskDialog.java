@@ -125,9 +125,9 @@ public class TaskDialog {
 
             dialog.close();
         } catch (IllegalArgumentException e) {
-            new ErrorDialog("Input Error", e.getMessage());
+            new MessageDialog("Input Error", e.getMessage());
         } catch (Exception e) {
-            new ErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
+            new MessageDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
         }
     }
 
@@ -149,9 +149,9 @@ public class TaskDialog {
 
             dialog.close();
         } catch (IllegalArgumentException e) {
-            new ErrorDialog("Input Error", e.getMessage());
+            new MessageDialog("Input Error", e.getMessage());
         } catch (Exception e) {
-            new ErrorDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
+            new MessageDialog("Unexpected Error", "An unexpected error occurred. Please try again.");
         }
     }
 

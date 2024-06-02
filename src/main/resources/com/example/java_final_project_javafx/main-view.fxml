@@ -21,12 +21,14 @@
             <Label text="Countdown Timer"/>
             <Label fx:id="timerLabel" text="Focus Time" style="-fx-font-size: 30px;"/>
             <TextField fx:id="taskField" promptText="Enter main task"/>
+            <TextField fx:id="durationField" promptText="Duration (minutes)"/>
             <HBox spacing="10.0">
-                <TextField fx:id="durationField" promptText="Duration (minutes)" />
-                <Button text="Start" onAction="#startTimer"/>
+                    <Button text="Start" onAction="#startTimer"/>
+                    <Button text="Pause" onAction="#pauseTimer"/>
+                    <Button text="Reset" onAction="#resetTimer"/>
             </HBox>
-<!--            <Label text="Expiring" />-->
-<!--            <ListView fx:""-->
+            <!--            <Label text="Expiring" />-->
+            <!--            <ListView fx:""-->
         </VBox>
     </left>
     <center>
@@ -50,12 +52,12 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-<!--            <Label text="Workflow"/>-->
-<!--            <ListView fx:id="workflowListView"/>-->
-            <Label text = "Finished tasks"/>
+            <!--            <Label text="Workflow"/>-->
+            <!--            <ListView fx:id="workflowListView"/>-->
+            <Label text="Finished tasks"/>
             <ListView fx:id="finishedListView"/>
-            <HBox spacing = "10.0">
-                <Button text = "Delete" onAction="#deleteFinishedTaskElement"/>
+            <HBox spacing="10.0">
+                <Button text="Delete" onAction="#deleteFinishedTaskElement"/>
             </HBox>
         </VBox>
     </right>
