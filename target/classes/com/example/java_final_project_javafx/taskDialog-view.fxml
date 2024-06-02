@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<DialogPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.TaskDialogController">
+    <content>
+        <GridPane hgap="10" vgap="10">
+            <Label text="Task Name:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="taskNameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            
+            <Label text="Start Date:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            
+            <Label text="End Date:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            
+            <Label text="Progress:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="progressField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        </GridPane>
+    </content>
+    <buttonTypes>
+        <ButtonType text="Save" fx:id="saveButtonType" type="APPLY"/>
+        <ButtonType text="Cancel" type="CANCEL"/>
+    </buttonTypes>
+</DialogPane>

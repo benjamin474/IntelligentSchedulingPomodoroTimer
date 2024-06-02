@@ -4,19 +4,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Pos;
 
 import java.text.NumberFormat;
 import java.time.LocalDate;
 
 public class TaskDialog {
+
     // create the dialog
     Stage dialog = new Stage();
 
-    VBox dialogVbox = new VBox(15);
+    VBox dialogVbox = new VBox(20);
+
+    HBox buttonBox = new HBox(15); // create a new HBox with 10px spacing
+    HBox startBox = new HBox(10);
+    HBox endBox = new HBox(10);
 
     TextField newTaskField = new TextField();
     TextField progressField = new TextField();
@@ -33,6 +40,12 @@ public class TaskDialog {
     NumberFormat format = NumberFormat.getInstance();
 
     MainController mainController;
+    
+    private Label taskLabel = new Label("Task Name");
+    private Label startLabel = new Label("Start Date");
+    private Label endLabel = new Label("End Date");
+    private Label progressLabel = new Label("Progress");
+    private Label commentLabel = new Label("Comment");
 
     TaskDialog(MainController mainController) {
         // store the task list view
@@ -86,6 +99,8 @@ public class TaskDialog {
 
         // set the action for the add button
         newTaskField.setOnAction(event -> handleTask());
+
+        buttonBox.setAlignment(Pos.CENTER); // align the buttons to the center of the HBox
     }
 
     TaskDialog(MainController mainController, Task task) {
@@ -108,9 +123,17 @@ public class TaskDialog {
     }
 
     public void show() {
-        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, commentField, addButton, cancelButton);
+        buttonBox.getChildren().addAll(addButton, cancelButton);
+        dialogVbox.getChildren().addAll(
+                new VBox(5, taskLabel, newTaskField),
+                new VBox(5, startLabel, startDatePicker),
+                new VBox(5, endLabel, endDatePicker),
+                new VBox(10, progressLabel, progressField, slider),
+                new VBox(5, commentLabel, commentField),
+                buttonBox
+        );
         // set the scene
-        Scene dialogScene = new Scene(dialogVbox, 300, 300);
+        Scene dialogScene = new Scene(dialogVbox, 300, 400);
         dialog.setScene(dialogScene);
         dialog.show();
     }
