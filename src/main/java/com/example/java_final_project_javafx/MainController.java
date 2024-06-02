@@ -51,16 +51,21 @@ public class MainController {
     protected void startTimer() {
         System.out.println("Starting timer");
         if (timer == null) {
-            String durationText = durationField.getText();
-
             try {
-                initialTime = Integer.parseInt(durationText) * 60;
-                if (initialTime <= 0) {
-                    new MessageDialog("Input error", "Please enter a positive number");
+                // set the initial time
+                String[] time = durationField.getText().split(":");
+                try {
+                    int minutes = Integer.parseInt(time[0]);
+                    int seconds = 0;
+                    if (time.length > 1) {
+                        seconds = Integer.parseInt(time[1]);
+                    }
+                    timeRemaining = minutes * 60 + seconds;
+                } catch (NumberFormatException e) {
+                    timeRemaining = initialTime;
                 }
 
-                timeRemaining = initialTime;
-
+                // store the initial time
                 if (timer != null) {
                     timer.cancel();
                 }
