@@ -9,37 +9,39 @@ import javafx.collections.FXCollections;
 public class TaskDetailsController {
 
     @FXML
-    private Label taskNameLabel;
+    private Label taskNameLabel; // Label to display the task name
 
     @FXML
-    private Label startDateLabel;
+    private Label startDateLabel; // Label to display the task start date
 
     @FXML
-    private Label endDateLabel;
+    private Label endDateLabel; // Label to display the task end date
 
     @FXML
-    private Label progressLabel;
+    private Label progressLabel; // Label to display the task progress
 
     @FXML
-    private Label commentLabel;
+    private Label commentLabel; // Label to display the task comment
 
     @FXML
-    private ListView<SubTask> subTaskListView;
+    private ListView<SubTask> subTaskListView; // ListView to display the subtasks
 
-    private Task task;
+    private Task task; // The task associated with this controller
 
+    // Method to set the task and update the view with the task details
     public void setTask(Task task) {
         this.task = task;
         updateView();
     }
 
+    // Method to update the view with the task details
     private void updateView() {
         if (task != null) {
-            taskNameLabel.setText(task.getName());
-            startDateLabel.setText(task.getStartDate().toString());
-            endDateLabel.setText(task.getEndDate().toString());
-            progressLabel.setText(task.calculateTotalProgress() + "%");
-            commentLabel.setText(task.getComment());
+            taskNameLabel.setText(task.getName()); // Set the task name label
+            startDateLabel.setText(task.getStartDate().toString()); // Set the start date label
+            endDateLabel.setText(task.getEndDate().toString()); // Set the end date label
+            progressLabel.setText(task.calculateTotalProgress() + "%"); // Set the progress label
+            commentLabel.setText(task.getComment()); // Set the comment label
 
 //            subTaskListView.setItems(FXCollections.observableArrayList(task.getSubTasks()));
         }
