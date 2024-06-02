@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.text.NumberFormat;
@@ -13,6 +14,8 @@ public class ChooseTaskDialog {
     Stage dialog = new Stage();
 
     VBox dialogVbox = new VBox(15);
+
+    HBox buttonBox = new HBox(15); // create a new HBox with 10px spacing
 
     private ListView<Task> taskListView;
 
@@ -37,9 +40,14 @@ public class ChooseTaskDialog {
     }
 
     public void show() {
-        dialogVbox.getChildren().addAll(taskListView, addButton, cancelButton);
+        // add the task list view to the dialog
+        buttonBox.getChildren().addAll(addButton, cancelButton);
+        buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        // add the task list view to the dialog
+        dialogVbox.getChildren().addAll(taskListView, buttonBox);
         // set the scene
-        Scene dialogScene = new Scene(dialogVbox, 300, 300);
+        Scene dialogScene = new Scene(dialogVbox, 300, 350);
         dialog.setScene(dialogScene);
         dialog.show();
         mainController.listRefresh();
