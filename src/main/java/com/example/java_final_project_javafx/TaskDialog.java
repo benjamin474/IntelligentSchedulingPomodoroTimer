@@ -16,7 +16,7 @@ public class TaskDialog {
     // create the dialog
     Stage dialog = new Stage();
 
-    VBox dialogVbox = new VBox(20);
+    VBox dialogVbox = new VBox(15);
 
     TextField newTaskField = new TextField();
     TextField progressField = new TextField();
