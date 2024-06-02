@@ -45,7 +45,7 @@ public class MainController {
 
     public TaskStorage taskStorage = new TaskStorage();
 
-
+    // 初始化，設置初始狀態和從文件加載任務
     @FXML
     public void initialize() {
         setChooseTaskButton(true);
@@ -55,6 +55,7 @@ public class MainController {
         durationField.setText("25:00");    
     }
 
+    // 開始計時器
     @FXML
     protected void startTimer() {
         System.out.println("Starting timer");
@@ -109,6 +110,7 @@ public class MainController {
         }
     }
 
+    // 暫停計時器
     @FXML
     protected void pauseTimer() {
         System.out.println("Pause timer");
@@ -116,6 +118,7 @@ public class MainController {
             isPaused = true;
     }
 
+    // 重置計時器
     @FXML
     protected void resetTimer() {
         setChooseTaskButton(true);
@@ -132,12 +135,14 @@ public class MainController {
         }
     }
 
+    // 顯示添加任務對話框
     @FXML
     protected void showAddTaskDialog() {
         TaskDialog taskDialog = new TaskDialog(this);
         taskDialog.show();
     }
 
+    // 顯示編輯任務對話框
     @FXML
     protected void showEditTaskDialog() {
         // get the selected task
@@ -152,11 +157,13 @@ public class MainController {
         taskDialog.show();
     }
 
+    // 將新任務添加到任務列表中
     public void storeToListView(Task newTask) {
         taskListView.getItems().add(newTask);
         saveTasksToFile();
     }
 
+    // 刪除選中任務
     @FXML
     protected void deleteTaskElement() {
         int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
@@ -169,6 +176,7 @@ public class MainController {
         }
     }
 
+    // 刪除已完成任務
     @FXML
     protected void deleteFinishedTaskElement() {
         int selectedIndex = finishedListView.getSelectionModel().getSelectedIndex();
@@ -181,6 +189,7 @@ public class MainController {
         }
     }
 
+    // 標記選中任務為完成
     @FXML
     protected void finishTask() {
         Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
@@ -192,6 +201,7 @@ public class MainController {
         getFinishedList();
     }
 
+    // 查看任務詳情
     @FXML
     protected void viewTaskDetails() {
         Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
@@ -216,6 +226,7 @@ public class MainController {
         }
     }
 
+    // 更新完成的任務列表
     private void getFinishedList() {
         for (Task task : taskListView.getItems()) {
             if (task.getCompleted() == 100) {
@@ -228,12 +239,14 @@ public class MainController {
         }
     }
 
+    // 保存任務到文件
     public void saveTasksToFile() {
         taskStorage.saveTasksToFile(taskListView.getItems(), finishedListView.getItems());
         getFinishedList();
         listRefresh();
     }
 
+    // 獲取任務列表的大小
     public int getListViewSize(int type) {
         if (type == TASK) {
             return taskListView.getItems().size();
@@ -243,26 +256,31 @@ public class MainController {
         return 0;
     }
 
+    // 刷新任務列表
     public void listRefresh() {
         taskListView.refresh();
         finishedListView.refresh();
     }
 
+    // 顯示選擇任務對話框
     @FXML
     protected void chooseTask() {
         ChooseTaskDialog chooseTaskDialog = new ChooseTaskDialog(this);
         chooseTaskDialog.show();
     }
 
+    // 獲取任務列表視圖
     public ListView<Task> getTaskListView() {
         return taskListView;
     }
 
+    // 設置當前選中任務
     public void setTask(Task task) {
         this.selectedTask = task;
         System.out.println("Selected task: " + task);
     }
 
+    // 設置選擇任務按鈕
     public void setChooseTaskButton(Boolean b) {
         if (b) {
             chooseTaskButton.setText("Choose Task");
