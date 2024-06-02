@@ -10,15 +10,23 @@ public class Task implements Serializable {
     private LocalDate startDate;
     private LocalDate endDate;
     private Integer completed; // Allow null to indicate not manually set
+    private String comment;
     private List<SubTask> subTasks;
-
 
     public Task(String name, LocalDate startDate, LocalDate endDate, Integer completed) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.completed = completed;
-        this.subTasks = new ArrayList<>();
+    }
+
+    public Task(String name, LocalDate startDate, LocalDate endDate, Integer completed, String comment) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.completed = completed;
+        this.comment = comment;
+//        this.subTasks = new ArrayList<>();
     }
 
     // Getters and setters
@@ -52,6 +60,14 @@ public class Task implements Serializable {
 
     public void setCompleted(Integer completed) {
         this.completed = completed;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getComment() {
+        return comment;
     }
 
     public List<SubTask> getSubTasks() {

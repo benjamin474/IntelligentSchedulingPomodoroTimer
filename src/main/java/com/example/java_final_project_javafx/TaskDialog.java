@@ -20,6 +20,7 @@ public class TaskDialog {
 
     TextField newTaskField = new TextField();
     TextField progressField = new TextField();
+    TextField commentField = new TextField();
 
     DatePicker startDatePicker = new DatePicker();
     DatePicker endDatePicker = new DatePicker();
@@ -41,21 +42,24 @@ public class TaskDialog {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Add Task");
 
-        // set the default values for the new task
         newTaskField.setText("Task " + (mainController.getListViewSize(mainController.TASK) + 1));
         newTaskField.setPromptText("Enter new task");
 
-        // set the default values for the new task
+
         startDatePicker.setValue(LocalDate.now());
         startDatePicker.setPromptText("Start date");
 
-        // set the default values for the new task
+
         endDatePicker.setValue(LocalDate.now().plusDays(1));
         endDatePicker.setPromptText("End date");
 
-        // set the default values for the new task
+
         progressField.setText("0");
         progressField.setPromptText("Completion (0 - 100%)");
+
+        //set the default values for the
+        commentField.setText("");
+        commentField.setPromptText("Enter comment");
 
         // set the slider's min, max, and initial value
         slider.setMin(0);
@@ -137,6 +141,7 @@ public class TaskDialog {
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
+            String comment = commentField.getText();
 
             checkLegality(editedTaskName, startDate, endDate, progress);
 
@@ -144,6 +149,7 @@ public class TaskDialog {
             selectedTask.setStartDate(startDate);
             selectedTask.setEndDate(endDate);
             selectedTask.setCompleted(progress);
+            selectedTask.setComment(comment);
             
             mainController.saveTasksToFile();
 

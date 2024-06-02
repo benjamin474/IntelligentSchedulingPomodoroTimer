@@ -2,6 +2,7 @@ package com.example.java_final_project_javafx;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskStorage {
@@ -15,13 +16,17 @@ public class TaskStorage {
 //       儲存任務資料
         File file;
         file = new File(TASKS_FILE);
-        
+
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task : tasks) {
-                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
+                writer.print(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted() + "," + task.getComment());
+                for (SubTask subTask : task.getSubTasks()) {
+                    writer.print(subTask.getName() + ",");
+                }
+                writer.println();
             }
             for (Task task : finishedTasks) {
-                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
+                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted() + "," + task.getComment());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,10 +47,12 @@ public class TaskStorage {
                 LocalDate startDate = LocalDate.parse(fields[1]);
                 LocalDate endDate = LocalDate.parse(fields[2]);
                 Integer completed = Integer.parseInt(fields[3]);
-                Task task = new Task(name, startDate, endDate, completed);
-                if(completed == 100) {
+                String comment = "fields[4]";
+
+                Task task = new Task(name, startDate, endDate, completed, comment);
+                if (completed == 100) {
                     finishedTasks.add(task);
-                } else{
+                } else {
                     tasks.add(task);
                 }
             }
