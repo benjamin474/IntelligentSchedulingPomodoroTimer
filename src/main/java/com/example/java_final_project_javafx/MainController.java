@@ -155,13 +155,23 @@ public class MainController {
         if (selectedIndex >= 0) {
             finishedListView.getItems().remove(selectedIndex);
             taskStorage.saveTasksToFile(taskListView.getItems(), finishedListView.getItems());
+        } else {
+            new MessageDialog("Selection Error", "No task selected");
+
         }
     }
 
     @FXML
     protected void finishTask() {
-        int selectedIndex = taskListView.getSelectionModel().getSelectedIndex();
-//        if()
+        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+        if (selectedTask == null) {
+            new MessageDialog("Selection Error", "No task selected");
+            return;
+        }
+        selectedTask.setCompleted(100);
+        getFinishedList();
+
+
     }
 
     @FXML
@@ -191,6 +201,7 @@ public class MainController {
     private void getFinishedList() {
         for (Task task : taskListView.getItems()) {
             if (task.getCompleted() == 100) {
+                System.out.println(task + " is finished");
                 finishedListView.getItems().add(task);
             }
         }
