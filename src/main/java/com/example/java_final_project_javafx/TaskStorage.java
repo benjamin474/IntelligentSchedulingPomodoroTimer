@@ -2,7 +2,6 @@ package com.example.java_final_project_javafx;
 
 import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskStorage {
@@ -13,20 +12,16 @@ public class TaskStorage {
     public final int FINISHED = 2;
 
     public void saveTasksToFile(List<Task> tasks, List<Task> finishedTasks) {
-//       儲存任務資料
+        // save the tasks to a file
         File file;
         file = new File(TASKS_FILE);
-
+        
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task : tasks) {
-                writer.print(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted() + "," + task.getComment());
-                for (SubTask subTask : task.getSubTasks()) {
-                    writer.print(subTask.getName() + ",");
-                }
-                writer.println();
+                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
             }
             for (Task task : finishedTasks) {
-                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted() + "," + task.getComment());
+                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,7 +29,7 @@ public class TaskStorage {
     }
 
     public void loadTasksFromFile(List<Task> tasks, List<Task> finishedTasks) {
-//        加載任務資料
+        // load the tasks from a file
         File file = new File(TASKS_FILE);
         System.out.println("Loading tasks from file: " + file.getAbsolutePath());
 
@@ -42,18 +37,20 @@ public class TaskStorage {
             String line;
             tasks.clear();
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                String name = fields[0];
-                LocalDate startDate = LocalDate.parse(fields[1]);
-                LocalDate endDate = LocalDate.parse(fields[2]);
-                Integer completed = Integer.parseInt(fields[3]);
-                String comment = "fields[4]";
-
-                Task task = new Task(name, startDate, endDate, completed, comment);
-                if (completed == 100) {
-                    finishedTasks.add(task);
-                } else {
-                    tasks.add(task);
+                try {
+                    String[] fields = line.split(",");
+                    String name = fields[0];
+                    LocalDate startDate = LocalDate.parse(fields[1]);
+                    LocalDate endDate = LocalDate.parse(fields[2]);
+                    Integer completed = Integer.parseInt(fields[3]);
+                    Task task = new Task(name, startDate, endDate, completed);
+                    if(completed == 100) {
+                        finishedTasks.add(task);
+                    } else{
+                        tasks.add(task);
+                    }
+                } catch (Exception e) {
+                    System.out.println("Error reading task: " + line);
                 }
             }
         } catch (IOException e) {
