@@ -24,7 +24,7 @@ public class TaskDialog {
 
     DatePicker startDatePicker = new DatePicker();
     DatePicker endDatePicker = new DatePicker();
-    
+
     Slider slider = new Slider();
 
     Button cancelButton = new Button("Cancel");
@@ -37,7 +37,7 @@ public class TaskDialog {
     TaskDialog(MainController mainController) {
         // store the task list view
         this.mainController = mainController;
-        
+
         // initialize the dialog
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Add Task");
@@ -66,18 +66,18 @@ public class TaskDialog {
         slider.setMax(100);
         slider.setValue(0);
         slider.setBlockIncrement(1);
-                
+
         // tie the slider's value to an integer property
         IntegerProperty intSliderValue = new SimpleIntegerProperty(0);
 
         // let the slider value be updated by the text field
-        slider.valueProperty().addListener((obs, oldval, newVal) -> 
-            intSliderValue.set(newVal.intValue())
+        slider.valueProperty().addListener((obs, oldval, newVal) ->
+                intSliderValue.set(newVal.intValue())
         );
 
         // let the text field be updated by the slider value
-        progressField.textProperty().bind(Bindings.createStringBinding(() -> 
-            format.format(intSliderValue.get()), intSliderValue)
+        progressField.textProperty().bind(Bindings.createStringBinding(() ->
+                format.format(intSliderValue.get()), intSliderValue)
         );
 
         // set the action for the save button
@@ -87,10 +87,11 @@ public class TaskDialog {
         // set the action for the add button
         newTaskField.setOnAction(event -> handleTask());
     }
+
     TaskDialog(MainController mainController, Task task) {
         // store the task list view
         this(mainController);
-        
+
         // initialize the dialog
         dialog.setTitle("Edit Task");
         newTaskField.setText(task.getName());
@@ -106,7 +107,7 @@ public class TaskDialog {
     }
 
     public void show() {
-        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, addButton, cancelButton);
+        dialogVbox.getChildren().addAll(newTaskField, startDatePicker, endDatePicker, progressField, slider, commentField, addButton, cancelButton);
         // set the scene
         Scene dialogScene = new Scene(dialogVbox, 300, 300);
         dialog.setScene(dialogScene);
@@ -119,10 +120,11 @@ public class TaskDialog {
             LocalDate startDate = startDatePicker.getValue();
             LocalDate endDate = endDatePicker.getValue();
             Integer progress = progressField.getText().isEmpty() ? null : Integer.parseInt(progressField.getText());
+            String comment = commentField.getText();
 
             checkLegality(newTaskName, startDate, endDate, progress);
 
-            Task newTask = new Task(newTaskName, startDate, endDate, progress);
+            Task newTask = new Task(newTaskName, startDate, endDate, progress, comment);
 
             // add the new task to the list view
             mainController.storeToListView(newTask);
@@ -150,7 +152,7 @@ public class TaskDialog {
             selectedTask.setEndDate(endDate);
             selectedTask.setCompleted(progress);
             selectedTask.setComment(comment);
-            
+
             mainController.saveTasksToFile();
 
             dialog.close();

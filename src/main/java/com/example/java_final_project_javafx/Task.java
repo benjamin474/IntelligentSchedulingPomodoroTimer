@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Task implements Serializable {
+public class Task {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -18,6 +18,7 @@ public class Task implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.completed = completed;
+        this.comment = "";
     }
 
     public Task(String name, LocalDate startDate, LocalDate endDate, Integer completed, String comment) {

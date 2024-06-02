@@ -24,14 +24,15 @@
         <Label text="Progress:"/>
         <Label fx:id="progressLabel"/>
     </HBox>
+
     <HBox spacing="10">
         <Label text="Comment:"/>
         <Label fx:id="commentLabel"/>
     </HBox>
 
 <!--    <ListView fx:id="subTaskListView"/>-->
-    <HBox spacing="10">
-        <Button text="Mark Completed" onAction="#markSubTaskCompleted"/>
-        <Button text="Add SubTask" onAction="#addSubTask"/>
-    </HBox>
+<!--    <HBox spacing="10">-->
+<!--        <Button text="Mark Completed" onAction="#markSubTaskCompleted"/>-->
+<!--        <Button text="Add SubTask" onAction="#addSubTask"/>-->
+<!--    </HBox>-->
 </VBox>

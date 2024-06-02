@@ -9,19 +9,20 @@ import javafx.scene.layout.VBox;
 public class MessageDialog {
     Stage dialog = new Stage();
     VBox dialogVbox = new VBox(20);
-    Label errorLabel = new Label();
+    Label messageLabel = new Label();
     Button okButton = new Button("OK");
-    
+
+//    因為程式中許多地方是用於Error 所以預設標題為Error
     MessageDialog(String message) {
         // initialize the dialog
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Error");
 
         // set the error message
-        errorLabel.setText(message);
+        messageLabel.setText(message);
 
         // add the error label to the dialog
-        dialogVbox.getChildren().add(errorLabel);
+        dialogVbox.getChildren().add(messageLabel);
 
         // add the ok button to the dialog
         dialogVbox.getChildren().add(okButton);
@@ -43,10 +44,10 @@ public class MessageDialog {
         dialog.setTitle(title);
 
         // set the error message
-        errorLabel.setText(message);
+        messageLabel.setText(message);
 
         // add the error label to the dialog
-        dialogVbox.getChildren().add(errorLabel);
+        dialogVbox.getChildren().add(messageLabel);
 
         // add the ok button to the dialog
         dialogVbox.getChildren().add(okButton);

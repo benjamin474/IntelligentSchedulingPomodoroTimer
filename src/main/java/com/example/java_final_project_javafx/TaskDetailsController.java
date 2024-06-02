@@ -41,18 +41,20 @@ public class TaskDetailsController {
             progressLabel.setText(task.calculateTotalProgress() + "%");
             commentLabel.setText(task.getComment());
 
-            subTaskListView.setItems(FXCollections.observableArrayList(task.getSubTasks()));
+//            subTaskListView.setItems(FXCollections.observableArrayList(task.getSubTasks()));
         }
     }
 
-    @FXML
-    protected void markSubTaskCompleted() {
-        SubTask selectedSubTask = subTaskListView.getSelectionModel().getSelectedItem();
-        if (selectedSubTask != null) {
-            selectedSubTask.setCompleted(true);
-            updateView();
-        }
-    }
+
+
+//    @FXML
+//    protected void markSubTaskCompleted() {
+//        SubTask selectedSubTask = subTaskListView.getSelectionModel().getSelectedItem();
+//        if (selectedSubTask != null) {
+//            selectedSubTask.setCompleted(true);
+//            updateView();
+//        }
+//    }
 
 //    @FXML
 //    protected void addSubTask() {

@@ -15,13 +15,13 @@ public class TaskStorage {
         // save the tasks to a file
         File file;
         file = new File(TASKS_FILE);
-        
+
         try (PrintWriter writer = new PrintWriter(file)) {
             for (Task task : tasks) {
-                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
+                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted() + "," + task.getComment());
             }
             for (Task task : finishedTasks) {
-                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted());
+                writer.println(task.getName() + "," + task.getStartDate() + "," + task.getEndDate() + "," + task.getCompleted() + "," + task.getComment());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,10 +43,11 @@ public class TaskStorage {
                     LocalDate startDate = LocalDate.parse(fields[1]);
                     LocalDate endDate = LocalDate.parse(fields[2]);
                     Integer completed = Integer.parseInt(fields[3]);
-                    Task task = new Task(name, startDate, endDate, completed);
-                    if(completed == 100) {
+                    String comment = (fields[4] == null ? "" : fields[4]);
+                    Task task = new Task(name, startDate, endDate, completed, comment);
+                    if (completed == 100) {
                         finishedTasks.add(task);
-                    } else{
+                    } else {
                         tasks.add(task);
                     }
                 } catch (Exception e) {
