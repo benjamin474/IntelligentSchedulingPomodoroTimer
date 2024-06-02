@@ -96,6 +96,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return name;
+        return name + " " + (completed != null ? " - " + completed + "%" : "");
     }
+
 }

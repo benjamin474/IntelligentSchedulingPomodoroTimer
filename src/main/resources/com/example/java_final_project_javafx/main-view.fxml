@@ -13,7 +13,7 @@
             </padding>
             <Label text="Countdown Timer"/>
             <Label fx:id="timerLabel" text="Focus Time" style="-fx-font-size: 30px;"/>
-            <TextField fx:id="taskField" promptText="Enter main task"/>
+            <Button fx:id="chooseTaskButton" text="Choose a task" onAction="#chooseTask"/>
             <TextField fx:id="durationField" promptText="Duration (minutes)"/>
             <HBox spacing="10.0">
                     <Button text="Start" onAction="#startTimer"/>

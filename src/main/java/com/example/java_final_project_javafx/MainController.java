@@ -31,6 +31,11 @@ public class MainController {
     @FXML
     private ListView<Task> finishedListView;
 
+    @FXML
+    private Button chooseTaskButton;
+
+    private Task selectedTask;
+
     private Timer timer;
     private int timeRemaining;
     public final int TASK = 1;
@@ -40,12 +45,14 @@ public class MainController {
 
     public TaskStorage taskStorage = new TaskStorage();
 
+
     @FXML
     public void initialize() {
+        setChooseTaskButton(true);
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
         taskStorage.loadTasksFromFile(taskListView.getItems(), finishedListView.getItems());
-        durationField.setText("25:00");
+        durationField.setText("25:00");    
     }
 
     @FXML
@@ -82,8 +89,13 @@ public class MainController {
                                 int seconds = timeRemaining % 60;
                                 timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
                                 if (timeRemaining <= 0) {
-                                    new MessageDialog("Time's up!", "Now edit your progress!");
-                                    timer.cancel();
+                                    if (selectedTask != null) {
+                                        new MessageDialog("Time's up!", "Now edit your progress!", selectedTask, MainController.this);
+                                    }
+                                    else {
+                                        new MessageDialog("Time's up!", "Time's up!");
+                                    }
+                                    resetTimer();
                                 }
                             }
                         });
@@ -106,6 +118,7 @@ public class MainController {
 
     @FXML
     protected void resetTimer() {
+        setChooseTaskButton(true);
         System.out.println("Reset timer");
         if (timer != null) {
             timer.cancel();
@@ -235,4 +248,28 @@ public class MainController {
         finishedListView.refresh();
     }
 
+    @FXML
+    protected void chooseTask() {
+        ChooseTaskDialog chooseTaskDialog = new ChooseTaskDialog(this);
+        chooseTaskDialog.show();
+    }
+
+    public ListView<Task> getTaskListView() {
+        return taskListView;
+    }
+
+    public void setTask(Task task) {
+        this.selectedTask = task;
+        System.out.println("Selected task: " + task);
+    }
+
+    public void setChooseTaskButton(Boolean b) {
+        if (b) {
+            chooseTaskButton.setText("Choose Task");
+            selectedTask = null;
+        }
+        else {
+            chooseTaskButton.setText(selectedTask.toString());
+        }
+    }
 }
