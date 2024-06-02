@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Task {
-    private String name;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private String name; // Name of the task
+    private LocalDate startDate; // Start date of the task
+    private LocalDate endDate; // End date of the task
     private Integer completed; // Allow null to indicate not manually set
-    private String comment;
-    private List<SubTask> subTasks;
+    private String comment; // Comment for the task
+    private List<SubTask> subTasks; // List of subtasks
 
+    // Constructor with name, start date, end date, and completion percentage
     public Task(String name, LocalDate startDate, LocalDate endDate, Integer completed) {
         this.name = name;
         this.startDate = startDate;
@@ -21,6 +22,7 @@ public class Task {
         this.comment = "";
     }
 
+    // Constructor with name, start date, end date, completion percentage, and comment
     public Task(String name, LocalDate startDate, LocalDate endDate, Integer completed, String comment) {
         this.name = name;
         this.startDate = startDate;
@@ -75,10 +77,12 @@ public class Task {
         return subTasks;
     }
 
+    // Add a subtask to the list of subtasks
     public void addSubTask(SubTask subTask) {
         this.subTasks.add(subTask);
     }
 
+    // Calculate the total progress of the task based on its subtasks
     public int calculateTotalProgress() {
         // 檢查子任務狀況
         if (completed != null) {
@@ -94,6 +98,7 @@ public class Task {
         return totalProgress / subTasks.size();
     }
 
+    // Override the toString method to display the task name and completion percentage
     @Override
     public String toString() {
         return name + " " + (completed != null ? " - " + completed + "%" : "");
