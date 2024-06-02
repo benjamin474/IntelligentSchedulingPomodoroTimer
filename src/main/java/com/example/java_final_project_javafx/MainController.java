@@ -1,6 +1,7 @@
 package com.example.java_final_project_javafx;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -44,7 +45,7 @@ public class MainController {
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
         taskStorage.loadTasksFromFile(taskListView.getItems(), finishedListView.getItems());
-        durationField.setText("25");
+        durationField.setText("25:00");
     }
 
     @FXML
@@ -176,8 +177,6 @@ public class MainController {
         }
         selectedTask.setCompleted(100);
         getFinishedList();
-
-
     }
 
     @FXML
@@ -235,4 +234,5 @@ public class MainController {
         taskListView.refresh();
         finishedListView.refresh();
     }
+
 }
