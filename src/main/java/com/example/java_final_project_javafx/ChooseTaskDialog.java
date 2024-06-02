@@ -6,6 +6,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.text.NumberFormat;
 
@@ -13,7 +15,7 @@ public class ChooseTaskDialog {
     // create the dialog
     Stage dialog = new Stage();
 
-    VBox dialogVbox = new VBox(15);
+    VBox dialogVbox = new VBox(18);
 
     HBox buttonBox = new HBox(15); // create a new HBox with 10px spacing
 
@@ -21,6 +23,8 @@ public class ChooseTaskDialog {
 
     Button cancelButton = new Button("Cancel");
     Button addButton = new Button("Add");
+
+    Label taskLabel = new Label("Select a task");
 
     NumberFormat format = NumberFormat.getInstance();
 
@@ -37,6 +41,8 @@ public class ChooseTaskDialog {
 
         addButton.setOnAction(e -> handleTask());
         cancelButton.setOnAction(e -> dialog.close());
+
+        taskLabel.setFont(Font.font("System", 14)); // set the font of the label to bold and size 20
     }
 
     public void show() {
@@ -45,9 +51,9 @@ public class ChooseTaskDialog {
         buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
 
         // add the task list view to the dialog
-        dialogVbox.getChildren().addAll(taskListView, buttonBox);
+        dialogVbox.getChildren().addAll(taskLabel, taskListView, buttonBox, new Label(""));
         // set the scene
-        Scene dialogScene = new Scene(dialogVbox, 300, 350);
+        Scene dialogScene = new Scene(dialogVbox, 300, 250);
         dialog.setScene(dialogScene);
         dialog.show();
         mainController.listRefresh();

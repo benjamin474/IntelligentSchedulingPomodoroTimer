@@ -29,6 +29,7 @@ public class MessageDialog {
 
         // set the error message
         messageLabel.setText(message);
+        messageLabel.setFont(javafx.scene.text.Font.font("System", 14));
 
         // set the ok button action
         okButton.setOnAction(e -> dialog.close());
@@ -58,6 +59,7 @@ public class MessageDialog {
 
         // set the error message
         messageLabel.setText(message);
+        messageLabel.setFont(javafx.scene.text.Font.font("System", 14));
 
         buttonBox.getChildren().addAll(messageLabel, okButton);
         buttonBox.setAlignment(Pos.CENTER);
@@ -82,6 +84,7 @@ public class MessageDialog {
 
         // set the error message
         messageLabel.setText(message);
+        messageLabel.setFont(javafx.scene.text.Font.font("System", 14));
 
         // set the ok button action
         okButton.setOnAction(event -> {
