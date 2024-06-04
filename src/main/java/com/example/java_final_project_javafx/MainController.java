@@ -37,6 +37,9 @@ public class MainController {
     private ListView<Task> finishedListView;
 
     @FXML
+    private ListView<Task> nearingExpirationListView;
+
+    @FXML
     private Button chooseTaskButton;
 
     @FXML
@@ -45,6 +48,8 @@ public class MainController {
     @FXML
     TextArea adviceTextArea;
 
+    @FXML
+    Label adviceLabel;
 
     private Task selectedTask;
 
