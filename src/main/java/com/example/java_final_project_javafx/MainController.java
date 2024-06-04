@@ -49,6 +49,9 @@ public class MainController {
     TextArea adviceTextArea;
 
     @FXML
+    TextArea enterTextArea;
+
+    @FXML
     Label adviceLabel;
 
     private Task selectedTask;
@@ -348,6 +351,28 @@ public class MainController {
 
     @FXML
     public void clickEnter() {
-
+        String message = enterTextArea.getText();
+        if (message.isEmpty()) {
+            new MessageDialog("Input Error", "Please enter a message");
+            return;
+        }
+        getAdviceButton.setVisible(false);
+        adviceTextArea.setText("Generating advice...");
+        adviceLabel.setText("Generating...");
+        new Thread(() -> {
+            ChatBot chatBot = new ChatBot();
+            chatBot.setAdvicePrompt();
+            String advice = chatBot.getMessage(message);
+            System.out.println(advice);
+        
+            Platform.runLater(() -> {
+                ChooseAdviceDialog chooseAdviceDialog = new ChooseAdviceDialog(this);
+                chooseAdviceDialog.show(advice);
+        
+                adviceTextArea.setText(advice);
+                adviceLabel.setText("Advice");
+                getAdviceButton.setVisible(true);
+            });
+        }).start();
     }
 }

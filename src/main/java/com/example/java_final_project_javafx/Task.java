@@ -32,6 +32,24 @@ public class Task {
 //        this.subTasks = new ArrayList<>();
     }
 
+    public Task(String name, String startDate, String endDate, String completed, String comment) {
+        this.name = name;
+        this.startDate = LocalDate.parse(startDate);
+        this.endDate = LocalDate.parse(endDate);
+        this.completed = Integer.parseInt(completed);
+        this.comment = comment;
+        this.subTasks = new ArrayList<>();
+    }
+
+    public Task(Task task) {
+        this.name = task.getName();
+        this.startDate = task.getStartDate();
+        this.endDate = task.getEndDate();
+        this.completed = task.getCompleted();
+        this.comment = task.getComment();
+        this.subTasks = new ArrayList<>(task.getSubTasks());
+    }
+
     // Getters and setters
     public String getName() {
         return name;
