@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -39,6 +40,9 @@ public class MainController {
 
     @FXML
     TextArea adviceTextArea;
+
+    @FXML
+    Label adviceLabel;
 
     private Task selectedTask;
 
@@ -303,12 +307,17 @@ public class MainController {
     public void getAdvice() {
         getAdviceButton.setVisible(false);
         adviceTextArea.setText("Generating advice...");
+        adviceLabel.setText("QwO");
         new Thread(() -> {
             ChatBot chatBot = new ChatBot();
             String advice = chatBot.getMessage(taskStorage.getFileStr());
             System.out.println(advice);
-            adviceTextArea.setText(advice);
-            getAdviceButton.setVisible(true);
+            
+            Platform.runLater(() -> {
+                adviceTextArea.setText(advice);
+                adviceLabel.setText("Advice");
+                getAdviceButton.setVisible(true);
+            });
         }).start();
     }
 }
