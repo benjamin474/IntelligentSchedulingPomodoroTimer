@@ -53,7 +53,7 @@
             <HBox spacing="10.0" />
             <!--            <Label text="Expiring" />-->
             <!--            <ListView fx:""-->
-            <Label fx:id="advice" style="-fx-font-size: 14px;" text="Advice">
+            <Label fx:id="adviceLabel" style="-fx-font-size: 14px;" text="Advice">
             <font>
                <Font size="1.0" />
             </font></Label>

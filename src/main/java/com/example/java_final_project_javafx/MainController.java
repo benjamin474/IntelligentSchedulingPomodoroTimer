@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -36,6 +37,9 @@ public class MainController {
     private ListView<Task> finishedListView;
 
     @FXML
+    private ListView<Task> nearingExpirationListView;
+
+    @FXML
     private Button chooseTaskButton;
 
     @FXML
@@ -45,7 +49,7 @@ public class MainController {
     TextArea adviceTextArea;
 
     @FXML
-    private ListView<Task> nearingExpirationListView;
+    Label adviceLabel;
 
     private Task selectedTask;
 
@@ -328,12 +332,17 @@ public class MainController {
     public void getAdvice() {
         getAdviceButton.setVisible(false);
         adviceTextArea.setText("Generating advice...");
+        adviceLabel.setText("QwO");
         new Thread(() -> {
             ChatBot chatBot = new ChatBot();
             String advice = chatBot.getMessage(taskStorage.getFileStr());
             System.out.println(advice);
-            adviceTextArea.setText(advice);
-            getAdviceButton.setVisible(true);
+            
+            Platform.runLater(() -> {
+                adviceTextArea.setText(advice);
+                adviceLabel.setText("Advice");
+                getAdviceButton.setVisible(true);
+            });
         }).start();
     }
 }
