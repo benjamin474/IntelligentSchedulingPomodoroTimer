@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.java_final_project_javafx.TaskDetailsController" spacing="10">
-    <Label text="Task Details" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-    <HBox spacing="10">
-        <Label text="Task Name:"/>
-        <Label fx:id="taskNameLabel"/>
-    </HBox>
-    <HBox spacing="10">
-        <Label text="Start Date:"/>
-        <Label fx:id="startDateLabel"/>
-    </HBox>
-    <HBox spacing="10">
-        <Label text="End Date:"/>
-        <Label fx:id="endDateLabel"/>
-    </HBox>
-    <HBox spacing="10">
-        <Label text="Progress:"/>
-        <Label fx:id="progressLabel"/>
-    </HBox>
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.java_final_project_javafx.TaskDetailsController">
+    <VBox spacing="10" alignment="CENTER">
 
-    <HBox spacing="10">
-        <Label text="Comment:"/>
-        <Label fx:id="commentLabel"/>
-    </HBox>
+    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Task Details" textAlignment="CENTER" />
+            <Label text="Task Name:" textAlignment="CENTER">
+             <font>
+                <Font size="14.0" />
+             </font></Label>
+            <Label fx:id="taskNameLabel" text="default" textFill="#7e0000"/>
+
+        <Label text="Start Date:" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Label fx:id="startDateLabel" text="default" textFill="#7e0000"/>
+
+        <Label text="End Date:" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Label fx:id="endDateLabel" text="default" textFill="#7e0000"/>
+
+        <Label text="Progress:" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Label fx:id="progressLabel" text="default" textFill="#7e0000"/>
+
+        <Label text="Comment:" textAlignment="CENTER">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+        <Label fx:id="commentLabel" text="default" textFill="#7e0000"/>
+    </VBox>
 
 <!--    <ListView fx:id="subTaskListView"/>-->
 <!--    <HBox spacing="10">-->

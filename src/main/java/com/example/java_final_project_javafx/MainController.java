@@ -242,7 +242,7 @@ public class MainController {
 
             Stage stage = new Stage();
             stage.setTitle("Task Details");
-            stage.setScene(new Scene(root, 400, 300));
+            stage.setScene(new Scene(root, 400, 350));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (IOException e) {
