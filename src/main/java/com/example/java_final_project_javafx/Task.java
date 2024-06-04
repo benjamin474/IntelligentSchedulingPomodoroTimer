@@ -119,7 +119,7 @@ public class Task {
     // Override the toString method to display the task name and completion percentage
     @Override
     public String toString() {
-        return name + " " + (completed != null ? " - " + completed + "%" : "");
+        return name + " " + (completed != null ? " - " + completed + "%" : "") + " " + comment;
     }
 
 }
