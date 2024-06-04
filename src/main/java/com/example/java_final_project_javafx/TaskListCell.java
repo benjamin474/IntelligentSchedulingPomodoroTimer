@@ -34,6 +34,24 @@ public class TaskListCell extends ListCell<Task> {
         content.setSpacing(10);
     }
 
+    public TaskListCell(String near) {
+        super();
+        nameLabel = new Label();
+        dateLabel = new Label();
+        commentLabel = new Label();
+        progressBar = null;
+//        progressBar.setMaxWidth(Double.MAX_VALUE);
+        // VBox layout to hold labels
+        VBox vBox = new VBox(nameLabel, dateLabel, brLabel, commentLabel);
+
+        // Set the VBox to grow horizontally within the HBox
+        HBox.setHgrow(vBox, Priority.ALWAYS);
+
+        // Create HBox layout with the VBox and ProgressBar
+        content = new HBox(vBox);
+        content.setSpacing(10);
+    }
+
     // Update the cell content based on the task item
     @Override
     protected void updateItem(Task task, boolean empty) {
@@ -45,7 +63,8 @@ public class TaskListCell extends ListCell<Task> {
             nameLabel.setText(task.getName());
             dateLabel.setText(task.getStartDate() + " - " + task.getEndDate());
             commentLabel.setText(task.getComment());
-            progressBar.setProgress(task.calculateTotalProgress() / 100.0);
+            if(progressBar != null)
+                progressBar.setProgress(task.calculateTotalProgress() / 100.0);
             setGraphic(content); // Set the HBox layout as the cell content
         }
     }

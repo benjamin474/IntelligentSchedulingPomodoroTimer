@@ -68,7 +68,7 @@ public class MainController {
         durationField.setText("25:00");
 
         nearingExpirationListView.setItems(FXCollections.observableArrayList());
-        nearingExpirationListView.setCellFactory(param -> new TaskListCell());
+        nearingExpirationListView.setCellFactory(param -> new TaskListCell("Near"));
 
         checkNearingExpirationTasks();
     }
