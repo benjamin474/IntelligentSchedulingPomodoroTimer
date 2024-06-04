@@ -19,34 +19,43 @@ public class TaskDialog {
     // create the dialog
     Stage dialog = new Stage();
 
+    // Layout containers
     VBox dialogVbox = new VBox(20);
 
     HBox buttonBox = new HBox(15); // create a new HBox with 10px spacing
     HBox startBox = new HBox(10);
     HBox endBox = new HBox(10);
 
+    // Input fields for task details
     TextField newTaskField = new TextField();
     TextField progressField = new TextField();
     TextField commentField = new TextField();
 
+    // Date pickers for start and end dates
     DatePicker startDatePicker = new DatePicker();
     DatePicker endDatePicker = new DatePicker();
 
+    // Slider for progress
     Slider slider = new Slider();
 
+    // Buttons for canceling and adding the task
     Button cancelButton = new Button("Cancel");
     Button addButton = new Button("Add");
 
+    // Number format for the slider
     NumberFormat format = NumberFormat.getInstance();
 
+    // Reference to the main controller
     MainController mainController;
-    
+
+    // Labels for task details
     private Label taskLabel = new Label("Task Name");
     private Label startLabel = new Label("Start Date");
     private Label endLabel = new Label("End Date");
     private Label progressLabel = new Label("Progress");
     private Label commentLabel = new Label("Comment");
 
+    // Constructor for adding a new task
     TaskDialog(MainController mainController) {
         // store the task list view
         this.mainController = mainController;
@@ -55,6 +64,7 @@ public class TaskDialog {
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle("Add Task");
 
+        // Set default values and prompts for input fields
         newTaskField.setText("Task " + (mainController.getListViewSize(mainController.TASK) + 1));
         newTaskField.setPromptText("Enter new task");
 
@@ -103,6 +113,7 @@ public class TaskDialog {
         buttonBox.setAlignment(Pos.CENTER); // align the buttons to the center of the HBox
     }
 
+    // Constructor for editing an existing task
     TaskDialog(MainController mainController, Task task) {
         // store the task list view
         this(mainController);
@@ -122,6 +133,7 @@ public class TaskDialog {
 
     }
 
+    // Show the dialog
     public void show() {
         buttonBox.getChildren().addAll(addButton, cancelButton);
         dialogVbox.getChildren().addAll(
@@ -138,6 +150,7 @@ public class TaskDialog {
         dialog.show();
     }
 
+    // Handle adding a new task
     private void handleTask() {
         try {
             String newTaskName = newTaskField.getText();
@@ -161,6 +174,7 @@ public class TaskDialog {
         }
     }
 
+    // Handle editing an existing task
     private void handleEditTask(Task selectedTask) {
         try {
             String editedTaskName = newTaskField.getText();
@@ -171,6 +185,7 @@ public class TaskDialog {
 
             checkLegality(editedTaskName, startDate, endDate, progress);
 
+            // Update the selected task
             selectedTask.setName(editedTaskName);
             selectedTask.setStartDate(startDate);
             selectedTask.setEndDate(endDate);
@@ -187,6 +202,7 @@ public class TaskDialog {
         }
     }
 
+    // Validate the input data
     private void checkLegality(String taskName, LocalDate startDate, LocalDate endDate, Integer progress) {
         if (taskName.isEmpty()) {
             throw new IllegalArgumentException("Task cannot be empty");
