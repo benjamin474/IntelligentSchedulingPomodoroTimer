@@ -11,8 +11,12 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 public class MainController {
 
@@ -40,6 +44,9 @@ public class MainController {
     @FXML
     TextArea adviceTextArea;
 
+    @FXML
+    private ListView<Task> nearingExpirationListView;
+
     private Task selectedTask;
 
     private Timer timer;
@@ -58,8 +65,14 @@ public class MainController {
         taskListView.setItems(FXCollections.observableArrayList());
         taskListView.setCellFactory(param -> new TaskListCell());
         taskStorage.loadTasksFromFile(taskListView.getItems(), finishedListView.getItems());
-        durationField.setText("25:00");    
+        durationField.setText("25:00");
+
+        nearingExpirationListView.setItems(FXCollections.observableArrayList());
+        nearingExpirationListView.setCellFactory(param -> new TaskListCell());
+
+        checkNearingExpirationTasks();
     }
+
 
     // 開始計時器
     @FXML
@@ -98,8 +111,7 @@ public class MainController {
                                 if (timeRemaining <= 0) {
                                     if (selectedTask != null) {
                                         new MessageDialog("Time's up!", "Now edit your progress!", selectedTask, MainController.this);
-                                    }
-                                    else {
+                                    } else {
                                         new MessageDialog("Time's up!", "Time's up!");
                                     }
                                     resetTimer();
@@ -180,6 +192,7 @@ public class MainController {
         } else {
             new MessageDialog("Selection Error", "No task selected");
         }
+        checkNearingExpirationTasks();
     }
 
     // 刪除已完成任務
@@ -205,6 +218,7 @@ public class MainController {
         }
         selectedTask.setCompleted(100);
         getFinishedList();
+        checkNearingExpirationTasks();
     }
 
     // 查看任務詳情
@@ -250,6 +264,7 @@ public class MainController {
         taskStorage.saveTasksToFile(taskListView.getItems(), finishedListView.getItems());
         getFinishedList();
         listRefresh();
+        checkNearingExpirationTasks();
     }
 
     // 獲取任務列表的大小
@@ -292,11 +307,21 @@ public class MainController {
             chooseTaskButton.setText("Choose Task");
             chooseTaskButton.setDisable(false); // Enable the button
             selectedTask = null;
-        }
-        else {
+        } else {
             chooseTaskButton.setText(selectedTask.toString());
             chooseTaskButton.setDisable(true); // Disable the button
         }
+    }
+
+    private void checkNearingExpirationTasks() {
+        List<Task> nearingExpirationTasks = taskListView.getItems().stream()
+                .filter(task -> {
+                    LocalDate endDate = task.getEndDate();
+                    LocalDate today = LocalDate.now();
+                    // 檢查相差天數小於兩天 並且尚未逾期
+                    return endDate != null && ChronoUnit.DAYS.between(today, endDate) <= 2 && !(endDate.isBefore(today));
+                }).collect(Collectors.toList());
+        nearingExpirationListView.getItems().setAll(nearingExpirationTasks);
     }
 
     @FXML
