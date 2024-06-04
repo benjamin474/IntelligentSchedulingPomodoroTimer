@@ -15,7 +15,7 @@ public class PomodoroApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(PomodoroApplication.class.getResource("main-view.fxml"));
         BorderPane root = fxmlLoader.load();
         // Create a new scene with the loaded layout
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 800, 500);
         // Set the title of the stage (window)
         stage.setTitle("Pomodoro Timer");
         // Set the scene to the stage

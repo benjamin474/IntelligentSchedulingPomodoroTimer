@@ -302,9 +302,11 @@ public class MainController {
     @FXML
     public void getAdvice() {
         adviceTextArea.setText("Generating advice...");
-        ChatBot chatBot = new ChatBot();
-        String advice = chatBot.getMessage(taskStorage.getFileStr());
-        System.out.println(advice);
-        adviceTextArea.setText(advice);
+        new Thread(() -> {
+            ChatBot chatBot = new ChatBot();
+            String advice = chatBot.getMessage(taskStorage.getFileStr());
+            System.out.println(advice);
+            adviceTextArea.setText(advice);
+        }).start();
     }
 }

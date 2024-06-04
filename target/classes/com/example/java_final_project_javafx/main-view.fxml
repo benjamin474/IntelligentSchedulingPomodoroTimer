@@ -7,11 +7,11 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.java_final_project_javafx.MainController">
     <left>
-        <VBox spacing="10.0">
+        <VBox prefHeight="526.0" prefWidth="214.0" spacing="10.0">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label text="Countdown Timer" />
+            <Label style="-fx-font-size: 14px;" text="Countdown Timer" />
             <Label fx:id="timerLabel" style="-fx-font-size: 30px;" text="Focus Time" />
             <Button fx:id="chooseTaskButton" onAction="#chooseTask" text="Choose a task" />
             <TextField fx:id="durationField" promptText="Duration (minutes)" />
@@ -20,23 +20,17 @@
                     <Button onAction="#pauseTimer" text="Pause" />
                     <Button onAction="#resetTimer" text="Reset" />
             </HBox>
-            <!--            <Label text="Expiring" />-->
-            <!--            <ListView fx:""-->
-            <Label fx:id="advice" style="-fx-font-size: 14px;" text="Advice">
-            <font>
-               <Font size="1.0" />
-            </font></Label>
-         <TextArea fx:id="adviceTextArea" prefHeight="200.0" prefWidth="200.0" />
-         <Button fx:id="getAdviceButton" onAction="#getAdvice" mnemonicParsing="false" text="Get Advice" />
+            <Label style="-fx-font-size: 14px;" text="Nearing expiration" />
+            <ListView fx:id="nearingExpirationListView" prefHeight="244.0" prefWidth="194.0" />
         </VBox>
     </left>
     <center>
-        <VBox spacing="10.0">
+        <VBox prefHeight="496.0" prefWidth="308.0" spacing="10.0">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label text="Tasks" />
-            <ListView fx:id="taskListView" />
+            <Label style="-fx-font-size: 14px;" text="Tasks" />
+            <ListView fx:id="taskListView" prefHeight="259.0" prefWidth="283.0" />
             <HBox spacing="10.0">
                 <Button onAction="#showAddTaskDialog" text="Add" />
                 <Button onAction="#showEditTaskDialog" text="Edit" />
@@ -44,20 +38,27 @@
                 <Button onAction="#finishTask" text="Finish" />
                 <Button onAction="#viewTaskDetails" text="View" />
             </HBox>
+            <!--            <Label text="Workflow"/>-->
+            <!--            <ListView fx:id="workflowListView"/>-->
+            <Label style="-fx-font-size: 14px;" text="Finished tasks" />
+            <ListView fx:id="finishedListView" prefHeight="103.0" prefWidth="286.0" />
+             <Button onAction="#deleteFinishedTaskElement" text="Delete" />
         </VBox>
     </center>
     <right>
-        <VBox spacing="10.0">
+        <VBox prefHeight="526.0" prefWidth="278.0" spacing="10.0">
             <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <!--            <Label text="Workflow"/>-->
-            <!--            <ListView fx:id="workflowListView"/>-->
-            <Label text="Finished tasks" />
-            <ListView fx:id="finishedListView" />
-            <HBox spacing="10.0">
-                <Button onAction="#deleteFinishedTaskElement" text="Delete" />
-            </HBox>
+            <HBox spacing="10.0" />
+            <!--            <Label text="Expiring" />-->
+            <!--            <ListView fx:""-->
+            <Label fx:id="advice" style="-fx-font-size: 14px;" text="Advice">
+            <font>
+               <Font size="1.0" />
+            </font></Label>
+         <TextArea fx:id="adviceTextArea" prefHeight="243.0" prefWidth="155.0" />
+         <Button fx:id="getAdviceButton" mnemonicParsing="false" onAction="#getAdvice" text="Get Advice" />
         </VBox>
     </right>
 </BorderPane>
