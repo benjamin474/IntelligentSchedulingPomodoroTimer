@@ -1,4 +1,6 @@
 module com.example.java_final_project_javafx {
+    requires java.net.http;
+
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
