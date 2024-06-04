@@ -12,6 +12,7 @@ module com.example.java_final_project_javafx {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.java_final_project_javafx to javafx.fxml;
     exports com.example.java_final_project_javafx;

@@ -7,6 +7,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.net.URI;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ChatBot {
     private static final String API_URL = "https://api.chatanywhere.tech/v1/chat/completions";
@@ -14,12 +16,13 @@ public class ChatBot {
 
     public static void main(String[] args) {
         ChatBot chatBot = new ChatBot();
-        System.out.println(API_KEY);
-        // System.out.println(chatBot.getMessageString("你好呀"));
+        System.out.println(chatBot.getMessageString("自我介紹一下"));
     }
 
     public String getMessageString(String message) {
         HttpClient client = HttpClient.newHttpClient();
+
+        System.out.println("Getting response from GPT-3.5 Turbo...");
 
         String json = "{"
             + "\"model\": \"gpt-3.5-turbo\","
@@ -51,8 +54,18 @@ public class ChatBot {
             return "Error";
         }
 
-        System.out.println(response.body());
+        System.out.println("Response received from GPT-3.5 Turbo");
 
-        return response.body();
+        try {
+            String jsonStr = response.body();
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(jsonStr);
+            JsonNode contentNode = rootNode.path("choices").get(0).path("message").path("content");
+            return contentNode.asText();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "Error";
     }
 }
