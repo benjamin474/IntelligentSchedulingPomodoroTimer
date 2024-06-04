@@ -5,6 +5,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,7 +23,13 @@ public class ChatBot {
     }
 
     public void setInitPrompt() {
-        prompt ="你將化身為一個助手。我將給你一張待辦事項列表，格式以\"作業名稱,開始日期,結束日期,完成狀態,備註\"的方式呈現。以\"Algorithm,2024-06-02,2024-06-06,85,Prepare exam\"為例，其中包含了作業名稱、開始時間、結束時間、完成度和一些備註。在這個基礎上根據工作表，你需要建議我如何安排這些任務。";
+        prompt = "你將化身為一個助手。我將給你一張待辦事項列表，格式以\"作業名稱,開始日期,結束日期,完成狀態,備註\"的方式呈現。以\"Algorithm,2024-06-02,2024-06-06,85,Prepare exam\"為例，其中包含了作業名稱、開始時間、結束時間、完成度和一些備註。在這個基礎上根據工作表，你需要建議我如何安排這些任務。";
+    }
+
+    public void setAdvicePrompt() {
+        System.out.println(LocalDate.now().toString());
+        prompt = "今天的日期是" + LocalDate.now().toString() + " ";
+        prompt = "現在我將給你一個目標，你要幫我拆分任務並且安排，格式以\"作業名稱,開始日期,結束日期,完成狀態,備註\"的方式呈現。以\"Algorithm,2024-06-02,2024-06-06,85,Prepare exam\"為例，其中包含了作業名稱、開始時間、結束時間、完成度和一些備註。幫我把目標拆分成多項，此外不要作其他回應，每一行格式固定，不要加其他標號或數字標。";
     }
     
     public String processStr(String str) {

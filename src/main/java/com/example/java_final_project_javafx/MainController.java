@@ -46,7 +46,13 @@ public class MainController {
     private Button getAdviceButton;
 
     @FXML
+    private Button enterButton;
+
+    @FXML
     TextArea adviceTextArea;
+
+    @FXML
+    TextArea enterTextArea;
 
     @FXML
     Label adviceLabel;
@@ -330,7 +336,7 @@ public class MainController {
 
     @FXML
     public void getAdvice() {
-        getAdviceButton.setVisible(false);
+        getAdviceButton.setDisable(true);
         adviceTextArea.setText("Generating advice...");
         adviceLabel.setText("Generating...");
         new Thread(() -> {
@@ -341,13 +347,37 @@ public class MainController {
             Platform.runLater(() -> {
                 adviceTextArea.setText(advice);
                 adviceLabel.setText("Advice");
-                getAdviceButton.setVisible(true);
+                getAdviceButton.setDisable(false);
             });
         }).start();
     }
 
     @FXML
     public void clickEnter() {
-
+        String message = enterTextArea.getText();
+        if (message.isEmpty()) {
+            new MessageDialog("Input Error", "Please enter a message");
+            return;
+        }
+        getAdviceButton.setDisable(true);
+        enterButton.setDisable(true);
+        adviceTextArea.setText("Generating advice...");
+        adviceLabel.setText("Generating...");
+        new Thread(() -> {
+            ChatBot chatBot = new ChatBot();
+            chatBot.setAdvicePrompt();
+            String advice = chatBot.getMessage(message);
+            System.out.println(advice);
+        
+            Platform.runLater(() -> {
+                ChooseAdviceDialog chooseAdviceDialog = new ChooseAdviceDialog(this);
+                chooseAdviceDialog.show(advice);
+        
+                adviceTextArea.setText(advice);
+                adviceLabel.setText("Advice");
+                getAdviceButton.setDisable(false);
+                enterButton.setDisable(false);
+            });
+        }).start();
     }
 }
