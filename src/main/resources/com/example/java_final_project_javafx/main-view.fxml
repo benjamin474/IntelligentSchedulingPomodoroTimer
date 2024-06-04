@@ -64,7 +64,7 @@
                 <Font size="1.0" />
             </font></Label>
         <TextArea fx:id="enterTextArea" prefHeight="90" prefWidth="155.0" promptText="Enter something."/>
-            <Button onAction="#clickEnter" text="Enter" />
+            <Button fx:id="enterButton" onAction="#clickEnter" text="Enter" />
         </VBox>
     </right>
 </BorderPane>

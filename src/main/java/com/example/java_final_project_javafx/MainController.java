@@ -46,6 +46,9 @@ public class MainController {
     private Button getAdviceButton;
 
     @FXML
+    private Button enterButton;
+
+    @FXML
     TextArea adviceTextArea;
 
     @FXML
@@ -333,7 +336,7 @@ public class MainController {
 
     @FXML
     public void getAdvice() {
-        getAdviceButton.setVisible(false);
+        getAdviceButton.setDisable(true);
         adviceTextArea.setText("Generating advice...");
         adviceLabel.setText("Generating...");
         new Thread(() -> {
@@ -344,7 +347,7 @@ public class MainController {
             Platform.runLater(() -> {
                 adviceTextArea.setText(advice);
                 adviceLabel.setText("Advice");
-                getAdviceButton.setVisible(true);
+                getAdviceButton.setDisable(false);
             });
         }).start();
     }
@@ -356,7 +359,8 @@ public class MainController {
             new MessageDialog("Input Error", "Please enter a message");
             return;
         }
-        getAdviceButton.setVisible(false);
+        getAdviceButton.setDisable(true);
+        enterButton.setDisable(true);
         adviceTextArea.setText("Generating advice...");
         adviceLabel.setText("Generating...");
         new Thread(() -> {
@@ -371,7 +375,8 @@ public class MainController {
         
                 adviceTextArea.setText(advice);
                 adviceLabel.setText("Advice");
-                getAdviceButton.setVisible(true);
+                getAdviceButton.setDisable(false);
+                enterButton.setDisable(false);
             });
         }).start();
     }
