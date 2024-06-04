@@ -13,6 +13,7 @@ module com.example.java_final_project_javafx {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.commons.text;
 
     opens com.example.java_final_project_javafx to javafx.fxml;
     exports com.example.java_final_project_javafx;

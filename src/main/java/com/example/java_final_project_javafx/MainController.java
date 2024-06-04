@@ -332,7 +332,7 @@ public class MainController {
     public void getAdvice() {
         getAdviceButton.setVisible(false);
         adviceTextArea.setText("Generating advice...");
-        adviceLabel.setText("QwO");
+        adviceLabel.setText("Generating...");
         new Thread(() -> {
             ChatBot chatBot = new ChatBot();
             String advice = chatBot.getMessage(taskStorage.getFileStr());
@@ -344,5 +344,10 @@ public class MainController {
                 getAdviceButton.setVisible(true);
             });
         }).start();
+    }
+
+    @FXML
+    public void clickEnter() {
+
     }
 }

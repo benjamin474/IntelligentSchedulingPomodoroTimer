@@ -85,11 +85,7 @@ public class TaskStorage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(int i = 0; i < ret.length(); i++) {
-            if(ret.charAt(i) == '\n') {
-                ret = ret.substring(0, i) + " " + ret.substring(i + 1);
-            }
-        }
+        
         return ret;
     }
 }

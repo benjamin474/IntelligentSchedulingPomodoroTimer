@@ -9,27 +9,51 @@ import java.net.http.HttpResponse.BodyHandlers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 public class ChatBot {
     private static final String API_URL = "https://api.chatanywhere.tech/v1/chat/completions";
     private static final String API_KEY = System.getenv("GPT_API_KEY");
     // private static final String prompt = "You will now play the role of an assistant. I will give you a to-do list, and you need to help me provide some suggestions on how to best arrange these tasks. ";
-    private static final String prompt = "你現在要扮演一個助手，我會給你一個to do list，你要幫我給一些這些事情該怎麼安排比較好的建議: ";
+    private String prompt;
     
-    public ChatBot() {}
+    public ChatBot() {
+        setInitPrompt();
+    }
+
+    public void setInitPrompt() {
+        prompt ="你將化身為一個助手。我將給你一張待辦事項列表，格式以\"作業名稱,開始日期,結束日期,完成狀態,備註\"的方式呈現。以\"Algorithm,2024-06-02,2024-06-06,85,Prepare exam\"為例，其中包含了作業名稱、開始時間、結束時間、完成度和一些備註。在這個基礎上根據工作表，你需要建議我如何安排這些任務。";
+    }
+    
+    public String processStr(String str) {
+        // 將所有的換行符替換為空格
+        String ret = str.replace("\n", " ");
+        // 轉義 JSON 特殊字符
+        ret = StringEscapeUtils.escapeJson(ret);
+        return ret;
+    }
 
     public String getMessage(String message) {
         HttpClient client = HttpClient.newHttpClient();
 
         System.out.println("Getting response from GPT-3.5 Turbo...");
 
-        System.out.println(prompt + message);
+        prompt = processStr(prompt);
+        message = processStr(message);
 
         String json = "{"
             + "\"model\": \"gpt-3.5-turbo\","
             + "\"messages\": [{\"role\": \"assistant\", \"content\": \"" + prompt + message + "\"}],"
             + "\"temperature\": 0.7"
             + "}";
-
+        
+            JsonValidator validator = new JsonValidator();
+            if (!validator.isValidJson(json)) {
+                System.out.println("Invalid JSON");
+                System.out.println(json);
+                return "Error";
+            }
+        
         /*
          String json = "{"
             + "\"model\": \"gpt-3.5-turbo\","
