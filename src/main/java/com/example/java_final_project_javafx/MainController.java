@@ -301,12 +301,14 @@ public class MainController {
 
     @FXML
     public void getAdvice() {
+        getAdviceButton.setVisible(false);
         adviceTextArea.setText("Generating advice...");
         new Thread(() -> {
             ChatBot chatBot = new ChatBot();
             String advice = chatBot.getMessage(taskStorage.getFileStr());
             System.out.println(advice);
             adviceTextArea.setText(advice);
+            getAdviceButton.setVisible(true);
         }).start();
     }
 }
