@@ -65,4 +65,31 @@ public class TaskStorage {
             e.printStackTrace();
         }
     }
+
+    public String getFileStr() {
+        // load the tasks from a file
+        File file = new File(TASKS_FILE); // Create a file object with the specified file name
+        System.out.println("Loading tasks from file: " + file.getAbsolutePath());
+
+        String ret = "";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(TASKS_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                try {
+                    ret += line + "\n";
+                } catch (Exception e) {
+                    System.out.println("Error reading task: " + line); // Print error message if a task cannot be read
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < ret.length(); i++) {
+            if(ret.charAt(i) == '\n') {
+                ret = ret.substring(0, i) + " " + ret.substring(i + 1);
+            }
+        }
+        return ret;
+    }
 }

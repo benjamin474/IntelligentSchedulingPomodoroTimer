@@ -2,33 +2,41 @@ package com.example.java_final_project_javafx;
 
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.net.URI;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ChatBot {
     private static final String API_URL = "https://api.chatanywhere.tech/v1/chat/completions";
     private static final String API_KEY = System.getenv("GPT_API_KEY");
+    // private static final String prompt = "You will now play the role of an assistant. I will give you a to-do list, and you need to help me provide some suggestions on how to best arrange these tasks. ";
+    private static final String prompt = "你現在要扮演一個助手，我會給你一個to do list，你要幫我給一些這些事情該怎麼安排比較好的建議: ";
+    
+    public ChatBot() {}
 
-    public static void main(String[] args) {
-        ChatBot chatBot = new ChatBot();
-        System.out.println(chatBot.getMessageString("自我介紹一下"));
-    }
-
-    public String getMessageString(String message) {
+    public String getMessage(String message) {
         HttpClient client = HttpClient.newHttpClient();
 
         System.out.println("Getting response from GPT-3.5 Turbo...");
 
+        System.out.println(prompt + message);
+
         String json = "{"
+            + "\"model\": \"gpt-3.5-turbo\","
+            + "\"messages\": [{\"role\": \"assistant\", \"content\": \"" + prompt + message + "\"}],"
+            + "\"temperature\": 0.7"
+            + "}";
+
+        /*
+         String json = "{"
             + "\"model\": \"gpt-3.5-turbo\","
             + "\"messages\": [{\"role\": \"user\", \"content\": \"" + message + "\"}],"
             + "\"temperature\": 0.7"
-            + "}";
+            + "}"; 
+         */
 
         HttpRequest request = null;
 
@@ -63,6 +71,7 @@ public class ChatBot {
             JsonNode contentNode = rootNode.path("choices").get(0).path("message").path("content");
             return contentNode.asText();
         } catch (Exception e) {
+            System.out.println(response.body());
             e.printStackTrace();
         }
 

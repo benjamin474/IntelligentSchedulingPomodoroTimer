@@ -34,6 +34,12 @@ public class MainController {
     @FXML
     private Button chooseTaskButton;
 
+    @FXML
+    private Button getAdviceButton;
+
+    @FXML
+    TextArea adviceTextArea;
+
     private Task selectedTask;
 
     private Timer timer;
@@ -291,4 +297,14 @@ public class MainController {
             chooseTaskButton.setText(selectedTask.toString());
             chooseTaskButton.setDisable(true); // Disable the button
         }
-    }}
+    }
+
+    @FXML
+    public void getAdvice() {
+        adviceTextArea.setText("Generating advice...");
+        ChatBot chatBot = new ChatBot();
+        String advice = chatBot.getMessage(taskStorage.getFileStr());
+        System.out.println(advice);
+        adviceTextArea.setText(advice);
+    }
+}

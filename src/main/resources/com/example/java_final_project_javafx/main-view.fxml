@@ -3,54 +3,60 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.java_final_project_javafx.MainController">
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.java_final_project_javafx.MainController">
     <left>
         <VBox spacing="10.0">
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label text="Countdown Timer"/>
-            <Label fx:id="timerLabel" text="Focus Time" style="-fx-font-size: 30px;"/>
-            <Button fx:id="chooseTaskButton" text="Choose a task" onAction="#chooseTask"/>
-            <TextField fx:id="durationField" promptText="Duration (minutes)"/>
+            <Label text="Countdown Timer" />
+            <Label fx:id="timerLabel" style="-fx-font-size: 30px;" text="Focus Time" />
+            <Button fx:id="chooseTaskButton" onAction="#chooseTask" text="Choose a task" />
+            <TextField fx:id="durationField" promptText="Duration (minutes)" />
             <HBox spacing="10.0">
-                    <Button text="Start" onAction="#startTimer"/>
-                    <Button text="Pause" onAction="#pauseTimer"/>
-                    <Button text="Reset" onAction="#resetTimer"/>
+                    <Button onAction="#startTimer" text="Start" />
+                    <Button onAction="#pauseTimer" text="Pause" />
+                    <Button onAction="#resetTimer" text="Reset" />
             </HBox>
             <!--            <Label text="Expiring" />-->
             <!--            <ListView fx:""-->
+            <Label fx:id="advice" style="-fx-font-size: 14px;" text="Advice">
+            <font>
+               <Font size="1.0" />
+            </font></Label>
+         <TextArea fx:id="adviceTextArea" prefHeight="200.0" prefWidth="200.0" />
+         <Button fx:id="getAdviceButton" onAction="#getAdvice" mnemonicParsing="false" text="Get Advice" />
         </VBox>
     </left>
     <center>
         <VBox spacing="10.0">
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label text="Tasks"/>
-            <ListView fx:id="taskListView"/>
+            <Label text="Tasks" />
+            <ListView fx:id="taskListView" />
             <HBox spacing="10.0">
-                <Button text="Add" onAction="#showAddTaskDialog"/>
-                <Button text="Edit" onAction="#showEditTaskDialog"/>
-                <Button text="Delete" onAction="#deleteTaskElement"/>
-                <Button text="Finish" onAction="#finishTask"/>
-                <Button text="View" onAction="#viewTaskDetails"/>
+                <Button onAction="#showAddTaskDialog" text="Add" />
+                <Button onAction="#showEditTaskDialog" text="Edit" />
+                <Button onAction="#deleteTaskElement" text="Delete" />
+                <Button onAction="#finishTask" text="Finish" />
+                <Button onAction="#viewTaskDetails" text="View" />
             </HBox>
         </VBox>
     </center>
     <right>
         <VBox spacing="10.0">
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
             <!--            <Label text="Workflow"/>-->
             <!--            <ListView fx:id="workflowListView"/>-->
-            <Label text="Finished tasks"/>
-            <ListView fx:id="finishedListView"/>
+            <Label text="Finished tasks" />
+            <ListView fx:id="finishedListView" />
             <HBox spacing="10.0">
-                <Button text="Delete" onAction="#deleteFinishedTaskElement"/>
+                <Button onAction="#deleteFinishedTaskElement" text="Delete" />
             </HBox>
         </VBox>
     </right>
