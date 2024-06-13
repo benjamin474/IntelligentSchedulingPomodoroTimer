@@ -14,6 +14,10 @@
 
 這些功能共同作用，幫助用戶更好地管理時間，提高工作效率，並保持良好的工作和休息平衡。
 
+## Demo Video
+
+https://www.youtube.com/watch?v=aTwDqQUsRTc
+
 ## API Key
 
 此為本專案使用的[API](https://github.com/chatanywhere/GPT_API_free)使用前將環境變數名稱設為`GPT_API_KEY`內容為這個專案申請的API Key
