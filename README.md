@@ -1,3 +1,5 @@
+# Intelligent Scheduling Pomodoro Timer
+
 程式碼位置： 
 
 src -> main -> java -> com.example.java_final_project_javafx 
