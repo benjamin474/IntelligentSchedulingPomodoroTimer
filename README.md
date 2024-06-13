@@ -14,6 +14,14 @@
 
 這些功能共同作用，幫助用戶更好地管理時間，提高工作效率，並保持良好的工作和休息平衡。
 
+## How to Run
+
+```bash
+java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar out/artifacts/IntelligentSchedulingPomodoroTimer_jar/Java_final_project_JavaFX.jar
+```
+
+請確認引號內是你的javaFX安裝路徑
+
 ## Demo Video
 
 https://www.youtube.com/watch?v=aTwDqQUsRTc
