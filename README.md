@@ -1,8 +1,17 @@
 # Intelligent Scheduling Pomodoro Timer
 
+## 程式碼位置：
+
+Java:
+src/main/java/com/example/java_final_project_javafx
+FXML:
+src/main/resources/com/example/java_final_project_javafx
+
+## 特色
+
 `IntelligentSchedulingPomodoroTimer` 是一個基於番茄工作法的時間管理工具。它允許用戶設定一個工作時間段，然後在這段時間結束後提醒用戶休息。這個工具的主要目的是幫助用戶提高工作效率，並防止長時間工作導致的疲勞。
 
-這個工具的主要功能包括：
+## 工具的主要功能
 
 1. **計時器**：用戶可以設定一個時間段，例如25分鐘，然後開始計時。計時器會在時間結束後提醒用戶休息。
 
@@ -20,7 +29,10 @@
 java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar out/artifacts/IntelligentSchedulingPomodoroTimer_jar/Java_final_project_JavaFX.jar
 ```
 
-請確認引號內是您的javaFX安裝路徑，以及更改指令中jar檔的位置
+引號內為JavaFX的安裝路徑，並且須更改指令中jar檔的位置
+該檔案在某些裝置上無法運行，本組花了許多時間仍無法解決
+若真的運行失敗，需用IntelliJ以傳統方式運行，非常抱歉。
+
 
 ## Demo Video
 
