@@ -20,7 +20,7 @@
 java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar out/artifacts/IntelligentSchedulingPomodoroTimer_jar/Java_final_project_JavaFX.jar
 ```
 
-請確認引號內是你的javaFX安裝路徑
+請確認引號內是您的javaFX安裝路徑，以及更改指令中jar檔的位置
 
 ## Demo Video
 
