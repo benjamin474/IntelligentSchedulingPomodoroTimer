@@ -26,14 +26,17 @@ src/main/resources/com/example/java_final_project_javafx
 ## How to Run
 
 ```bash
-java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar (jar檔案位置)
+java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar 第2組_番茄鐘_Java2024
 ```
 
 引號內為JavaFX的安裝路徑，並且須更改指令中jar檔的位置
 
 若電腦中沒有javafx sdk 22.0.1，可前往以下網址下載，安裝適用作業系統之版本後。
 
+
 將"C:/Program Files/Java/javafx-sdk-22.0.1/lib"一處改為安裝後解壓縮之位置
+
+若原本就有javafx sdk 22.0.1但位置不同，則將該處改為其資料夾所在路徑
 
 ( https://gluonhq.com/products/javafx/ )
 
