@@ -26,12 +26,16 @@ src/main/resources/com/example/java_final_project_javafx
 ## How to Run
 
 ```bash
-java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar out/artifacts/IntelligentSchedulingPomodoroTimer_jar/Java_final_project_JavaFX.jar
+java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar (jar檔案位置)
 ```
 
 引號內為JavaFX的安裝路徑，並且須更改指令中jar檔的位置
-該檔案在某些裝置上無法運行，本組花了許多時間仍無法解決
-若真的運行失敗，需用IntelliJ以傳統方式運行，非常抱歉。
+
+若電腦中沒有javafx sdk 22.0.1，可前往以下網址下載，安裝適用作業系統之版本後。
+
+將"C:/Program Files/Java/javafx-sdk-22.0.1/lib"一處改為安裝後解壓縮之位置
+
+( https://gluonhq.com/products/javafx/ )
 
 
 ## Demo Video
