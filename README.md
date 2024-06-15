@@ -4,6 +4,7 @@
 
 Java:
 src/main/java/com/example/java_final_project_javafx
+
 FXML:
 src/main/resources/com/example/java_final_project_javafx
 
@@ -26,7 +27,7 @@ src/main/resources/com/example/java_final_project_javafx
 ## How to Run
 
 ```bash
-java --module-path "C:/Program Files/Java/javafx-sdk-22.0.1/lib" --add-modules javafx.controls,javafx.fxml -jar 第2組_番茄鐘_Java2024
+java --module-path javafx-sdk-22.0.1/lib --add-modules javafx.controls,javafx.fxml -jar 第2組_番茄鐘_Java2024.jar
 ```
 
 引號內為JavaFX的安裝路徑，並且須更改指令中jar檔的位置
@@ -48,3 +49,8 @@ https://www.youtube.com/watch?v=aTwDqQUsRTc
 ## API Key
 
 此為本專案使用的[API](https://github.com/chatanywhere/GPT_API_free)使用前將環境變數名稱設為`GPT_API_KEY`內容為這個專案申請的API Key
+
+## 線上簡報連結:
+
+https://www.canva.com/design/DAGHPP5NGLA/BCdUFWnQbGpDeTcp2t6Wwg/view?utm_content=DAGHPP5NGLA&utm_campaign=designshare&utm_medium=link&utm_source=editor
+
