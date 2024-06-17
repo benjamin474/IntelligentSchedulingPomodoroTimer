@@ -1,13 +1,5 @@
 # Intelligent Scheduling Pomodoro Timer
 
-## 程式碼位置：
-
-Java:
-src/main/java/com/example/java_final_project_javafx
-
-FXML:
-src/main/resources/com/example/java_final_project_javafx
-
 ## 特色
 
 `IntelligentSchedulingPomodoroTimer` 是一個基於番茄工作法的時間管理工具。它允許用戶設定一個工作時間段，然後在這段時間結束後提醒用戶休息。這個工具的主要目的是幫助用戶提高工作效率，並防止長時間工作導致的疲勞。
@@ -30,27 +22,24 @@ src/main/resources/com/example/java_final_project_javafx
 java --module-path javafx-sdk-22.0.1/lib --add-modules javafx.controls,javafx.fxml -jar 第2組_番茄鐘_Java2024.jar
 ```
 
-引號內為JavaFX的安裝路徑，並且須更改指令中jar檔的位置
+引號內為JavaFX的安裝路徑，並且須更改指令中jar檔的位置，若電腦中沒有javafx sdk 22.0.1，可前往[以下網址下載](https://gluonhq.com/products/javafx/)。
 
-若電腦中沒有javafx sdk 22.0.1，可前往以下網址下載，安裝適用作業系統之版本後。
-
-
-將"C:/Program Files/Java/javafx-sdk-22.0.1/lib"一處改為安裝後解壓縮之位置
-
-若原本就有javafx sdk 22.0.1但位置不同，則將該處改為其資料夾所在路徑
-
-( https://gluonhq.com/products/javafx/ )
-
-
-## Demo Video
-
-https://www.youtube.com/watch?v=aTwDqQUsRTc
+安裝適用作業系統之版本後，將`C:/Program Files/Java/javafx-sdk-22.0.1/lib`一處改為安裝後解壓縮之位置，若原本就有javafx sdk 22.0.1但位置不同，則將該處改為其資料夾所在路徑。
 
 ## API Key
 
 此為本專案使用的[API](https://github.com/chatanywhere/GPT_API_free)使用前將環境變數名稱設為`GPT_API_KEY`內容為這個專案申請的API Key
 
-## 線上簡報連結:
+## 程式碼位置
 
-https://www.canva.com/design/DAGHPP5NGLA/BCdUFWnQbGpDeTcp2t6Wwg/view?utm_content=DAGHPP5NGLA&utm_campaign=designshare&utm_medium=link&utm_source=editor
+- Java
+`src/main/java/com/example/java_final_project_javafx`
 
+- FXML
+`src/main/resources/com/example/java_final_project_javafx`
+
+## 參考連結
+
+- [範例影片](https://www.youtube.com/watch?v=aTwDqQUsRTc)
+
+- [canva簡報連結](https://www.canva.com/design/DAGHPP5NGLA/BCdUFWnQbGpDeTcp2t6Wwg/view?utm_content=DAGHPP5NGLA&utm_campaign=designshare&utm_medium=link&utm_source=editor)
